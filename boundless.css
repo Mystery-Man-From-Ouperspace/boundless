@@ -121,11 +121,11 @@
     }
 
     .hitpoints {
-      grid-column: 1 / span 2;
+      grid-column: span 2 / span 2;
       background: white;
       border: 2px solid black;
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 2fr 2fr;
       position: relative;
 
       h4 {
@@ -158,7 +158,58 @@
         }
       }
     }
+    .battle {
+      grid-column: span 2;
+      background: white;
+      border: 2px solid black;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      position: relative;
+      
+      h4 {
+        color: black;
+        position: absolute;
+        right: 1rem;
+        bottom: 0;
+      }
+
+      .form-group {
+        display: flex;
+        flex-direction: column-reverse;
+        gap: 0;
+
+        label {
+          color: black;
+          max-height: min-content;
+        }
+
+        .form-fields {
+          max-height: min-content;
+        }
+
+        input {
+          background: white;
+          border: 2px solid black;
+          color: black;
+          text-align: center;
+          font-size: 1.5rem;
+        }
+      }
+
+      .attribute-roll {
+        position: absolute;
+        top: 0;
+        bottom: 65%;
+        left: 42%;
+        right: 42%;
+      }
+
+      .attribute-roll:hover {
+        filter: drop-shadow(0 0 7px #f20000);
+      }
+    }
   }
+
   .tab.active[data-tab="items"] {
     gap: 0.5rem;
 
@@ -240,5 +291,15 @@
         text-align: end;
       }
     }
+  }
+}
+
+#pause {
+  img {
+    content: url("/systems/boundless/assets/wheel.webp");
+    height: 192px;
+    width: 192px;
+    top: -45px;
+    left: calc(50% - 96px);
   }
 }

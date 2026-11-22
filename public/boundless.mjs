@@ -25,13 +25,13 @@ const systemPath = (path) => `systems/${systemID}/${path}`;
 /**
  * Roll a check and add a ChatMessage with the result.
  */
-async function rollCheck(rollAmount, rollLabel, position) {
+async function rollCheck(rollAmount, rollBonus, rollLabel, position, rollDamage) {
   const speaker = foundry.documents.ChatMessage.getSpeaker();
   const roll = new foundry.dice.Roll(`${rollAmount}d6`);
   await roll.evaluate();
 
   let successCount = 0;
-  let minimumRoll;
+  let minimumRoll = 5;
   switch (position) {
     case "absolute":
       minimumRoll = 1;
@@ -48,6 +48,7 @@ async function rollCheck(rollAmount, rollLabel, position) {
     case "impossible":
       minimumRoll = 7;
       break;
+    default:;
   }
 
   for (let i = 0; i < roll.dice.length; i++) {
@@ -59,14 +60,19 @@ async function rollCheck(rollAmount, rollLabel, position) {
     }
   }
 
+  const rollDamageWBonus = parseInt(roll.result)+parseInt(rollBonus);
+  let formula = `${rollAmount}D`;
+  if (rollDamage) {formula += `+${rollBonus}`};
   const renderedTemplate = await foundry.applications.handlebars.renderTemplate(
     systemPath("templates/shared/roll-message.hbs"),
     {
+      rollDamage: rollDamage,
+      rollDamageWBonus: rollDamageWBonus,
       maxSuccesses: successCount > 1,
       success: successCount > 0,
       rollLabel: rollLabel,
       position: `TYPES.Position.${position}`,
-      formula: `${rollAmount}D`,
+      formula: formula,
       rolls: roll.dice[0].results,
     },
   );
@@ -198,6 +204,9 @@ class BoundlessActorSheet extends api$1.HandlebarsApplicationMixin(sheets$1.Acto
         break;
       case "notes":
         context.notes = await this._getNotes();
+
+        context.enrichedDescription = await foundry.applications.ux.TextEditor.implementation.enrichHTML(context.notes.outer.value, { async: true });
+
         context.tab = context.tabs[partId];
         break;
     }
@@ -207,7 +216,7 @@ class BoundlessActorSheet extends api$1.HandlebarsApplicationMixin(sheets$1.Acto
   /* -------------------------------------------------- */
 
   /**
-   * Handles the system fields for the notes form-fields.
+   * Handles the system fields for the Notes form-fields.
    * @returns {object[]}
    */
   async _getNotes() {
@@ -231,11 +240,19 @@ class BoundlessActorSheet extends api$1.HandlebarsApplicationMixin(sheets$1.Acto
     const systemFields = CONFIG.Actor.dataModels[doc.type]?.schema.fields;
 
     let fieldSets = [];
+
+
+    if (doc.type === "player") {
     fieldSets = await this._addField(systemFields["strength"], source, fieldSets, "current");
     fieldSets = await this._addField(systemFields["presence"], source, fieldSets, "current");
     fieldSets = await this._addField(systemFields["agility"], source, fieldSets, "current");
-    fieldSets = await this._addField(systemFields["willpower"], source, fieldSets, "current");
+    fieldSets = await this._addField(systemFields["willpower"], source, fieldSets, "current");  
+    }
     fieldSets = await this._addField(systemFields["hitPoints"], source, fieldSets, null);
+    if (doc.type === "npc") {
+    fieldSets = await this._addField(systemFields["battle"], source, fieldSets, "damage");
+    }
+
 
     return fieldSets;
   }
@@ -400,21 +417,35 @@ class BoundlessActorSheet extends api$1.HandlebarsApplicationMixin(sheets$1.Acto
     );
 
     const rollLabel = game.i18n.localize(`Boundless.Sheets.Labels.${target.dataset.rollLabel}Check`);
-    const fdObject = await foundry.applications.api.DialogV2.input({
-      window: { title: "Boundless.Sheets.Labels.Roll" },
-      content: `
-        <div>
-          <h1>${rollLabel}</h1>
-          <label>
-          ${game.i18n.localize("TYPES.Position.label")}
-          <select name='position'>
-          ${options}
-          </select>
-          </label>
-        </div>
-        `,
-    });
-
+    let fdObject = {};
+    let rollBonus = 0;
+    if (target.dataset.rollLabel === "") {
+      fdObject = await foundry.applications.api.DialogV2.input({
+        window: { title: "Boundless.Sheets.Labels.Roll" },
+        content: `
+          <div>
+            <h1>${rollLabel}</h1>
+          </div>
+          `,
+      });
+      // rollBonus = await _getBattle().damageBonus;
+      rollBonus = this.actor.system.battle.damageBonus;
+    } else {
+      fdObject = await foundry.applications.api.DialogV2.input({
+        window: { title: "Boundless.Sheets.Labels.Roll" },
+        content: `
+          <div>
+            <h1>${rollLabel}</h1>
+            <label>
+            ${game.i18n.localize("TYPES.Position.label")}
+            <select name='position'>
+            ${options}
+            </select>
+            </label>
+          </div>
+          `,
+      });
+    }
     if (!fdObject) {
       return;
     }
@@ -423,7 +454,12 @@ class BoundlessActorSheet extends api$1.HandlebarsApplicationMixin(sheets$1.Acto
     const source = doc._source;
     const rollAmount = foundry.utils.getProperty(source, target.dataset.rollPath);
 
-    await rollCheck(rollAmount, rollLabel, fdObject.position);
+    const rollDamage = (target.dataset.rollLabel === "");
+    if (rollDamage) {
+      await rollCheck(rollAmount, rollBonus, rollLabel, "standard", rollDamage);
+    } else {
+      await rollCheck(rollAmount, rollBonus, rollLabel, fdObject.position, rollDamage);
+    }
   }
 
   /* -------------------------------------------------- */
@@ -819,7 +855,7 @@ class ActorBaseBoundless extends foundry.abstract.TypeDataModel {
         current: new NumberField(),
         max: new NumberField(),
       }),
-      notes: new HTMLField(),
+      notes: new HTMLField({}),
     };
   }
 
@@ -840,12 +876,15 @@ class NpcBoundless extends ActorBaseBoundless {
 
   /** @inheritdoc */
   static defineSchema() {
-    const { NumberField } = foundry.data.fields;
+    const { SchemaField, NumberField } = foundry.data.fields;
     const schema = {
-      armor: new NumberField(),
-      damage: new NumberField(),
-    };
+      battle: new SchemaField({
+        armor: new NumberField(),
+        damage: new NumberField(),
+        damageBonus: new NumberField(),
 
+      }),
+    };
     return Object.assign(super.defineSchema(), schema);
   }
 }

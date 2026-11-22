@@ -24,6 +24,9 @@
     </div>
 
     <h4 class="dice-total">
+      {{#if rollDamage}}
+      {{rollDamageWBonus}} {{localize "Damage(s)"}}
+      {{else}}
       {{#if maxSuccesses}}
       2+ {{localize "Hits"}}
       {{else}}
@@ -31,6 +34,7 @@
       1 {{localize "Hit"}}
       {{else}}
       0 {{localize "Hits"}}
+      {{/if}}
       {{/if}}
       {{/if}}
     </h4>

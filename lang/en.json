@@ -2,6 +2,18 @@
   "Boundless": {
     "Actor": {
       "FIELDS": {
+        "battle": {
+          "label": "",
+          "armor": {
+            "label": "Armor"
+          },
+          "damage": {
+            "label": "Damage"
+          },
+          "damageBonus": {
+            "label": "Damage Bonus"
+          }
+        },
         "hitPoints": {
           "label": "Hit Points",
           "current": {
@@ -42,7 +54,8 @@
         "PresenceCheck": "Presence Check",
         "AgilityCheck": "Agility Check",
         "StrengthCheck": "Strength Check",
-        "WillpowerCheck": "Willpower Check"
+        "WillpowerCheck": "Willpower Check",
+        "Check": "Damage Roll"
       },
       "Tabs": {
         "attributes": "Attributes",
