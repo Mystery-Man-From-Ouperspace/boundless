@@ -267,7 +267,8 @@ class BoundlessActorSheet extends api$1.HandlebarsApplicationMixin(sheets$1.Acto
     if (field instanceof foundry.data.fields.SchemaField) {
       const fieldset = {
         fieldset: true,
-        legend: field.label,
+        legend: field.libel,
+        label: field.label,
         className: field.name.toLowerCase(),
         canRoll: !!rollValuePath,
         rollValuePath: rollValuePath ? `${path}.${rollValuePath}` : "",
@@ -416,10 +417,12 @@ class BoundlessActorSheet extends api$1.HandlebarsApplicationMixin(sheets$1.Acto
         `<option value='${t}' ${t === "standard" ? "selected" : ""}>${game.i18n.localize(`TYPES.Position.${t}`)}</option>`,
     );
 
-    const rollLabel = game.i18n.localize(`Boundless.Sheets.Labels.${target.dataset.rollLabel}Check`);
+    const targetLabel = target.dataset.rollLabel;
+    const rollLabelBeforeTranslation = `Boundless.Sheets.Labels.`+targetLabel+`Check`
+    const rollLabel = game.i18n.localize(rollLabelBeforeTranslation);
     let fdObject = {};
     let rollBonus = 0;
-    if (target.dataset.rollLabel === "") {
+    if (target.dataset.rollLabel === "battle") {
       fdObject = await foundry.applications.api.DialogV2.input({
         window: { title: "Boundless.Sheets.Labels.Roll" },
         content: `
@@ -454,7 +457,7 @@ class BoundlessActorSheet extends api$1.HandlebarsApplicationMixin(sheets$1.Acto
     const source = doc._source;
     const rollAmount = foundry.utils.getProperty(source, target.dataset.rollPath);
 
-    const rollDamage = (target.dataset.rollLabel === "");
+    const rollDamage = (target.dataset.rollLabel === "battle");
     if (rollDamage) {
       await rollCheck(rollAmount, rollBonus, rollLabel, "standard", rollDamage);
     } else {
@@ -662,7 +665,7 @@ class BoundlessItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemSheet
     for (const field of Object.values(systemFields ?? {})) {
       const path = `system.${field.name}`;
       if (field instanceof foundry.data.fields.SchemaField) {
-        const fieldset = { fieldset: true, legend: field.label, fields: [] };
+        const fieldset = { fieldset: true, legend: field.libel, fields: [] };
         await this.#addSystemFields(fieldset, field.fields, source, path);
         fieldSets.push(fieldset);
       } else {

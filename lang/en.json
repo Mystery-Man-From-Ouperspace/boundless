@@ -3,43 +3,54 @@
     "Actor": {
       "FIELDS": {
         "battle": {
-          "label": "",
+          "label": "battle",
+          "libel": "",
           "armor": {
-            "label": "Armor"
+            "label": "armor",
+            "libel": "Armor"
           },
           "damage": {
-            "label": "Damage"
+            "label": "damage",
+            "libel": "Damage"
           },
           "damageBonus": {
-            "label": "Damage Bonus"
+            "label": "damageBonus",
+            "libel": "Damage Bonus"
           }
         },
         "hitPoints": {
-          "label": "Hit Points",
+          "label": "hitPoints",
+          "libel": "Hit Points",
           "current": {
-            "label": "Current"
+            "label": "current",
+            "libel": "Current"
           },
           "max": {
-            "label": "Max"
+            "label": "max",
+            "libel": "Max"
           }
         },
         "strength": {
-          "label": "Strength",
+          "label": "strength",
+          "libel": "Strength",
           "current": { "label": "Current" },
           "max": { "label": "Max" }
         },
         "presence": {
-          "label": "Presence",
+          "label": "presence",
+          "libel": "Presence",
           "current": { "label": "Current" },
           "max": { "label": "Max" }
         },
         "agility": {
-          "label": "Agility",
+          "label": "agility",
+          "libel": "Agility",
           "current": { "label": "Current" },
           "max": { "label": "Max" }
         },
         "willpower": {
-          "label": "Willpower",
+          "label": "willpower",
+          "libel": "Willpower",
           "current": { "label": "Current" },
           "max": { "label": "Max" }
         }
@@ -51,10 +62,10 @@
         "ItemSheet": "Default Boundless Item Sheet",
         "AddItem": "Add Item",
         "Roll": "Roll",
-        "PresenceCheck": "Presence Check",
-        "AgilityCheck": "Agility Check",
-        "StrengthCheck": "Strength Check",
-        "WillpowerCheck": "Willpower Check",
+        "presenceCheck": "Presence Check",
+        "agilityCheck": "Agility Check",
+        "strengthCheck": "Strength Check",
+        "willpowerCheck": "Willpower Check",
         "Check": "Damage Roll"
       },
       "Tabs": {
@@ -66,6 +77,7 @@
     "Combat": {
       "AddPlayer": "Add Player",
       "AddPlayerCombatTracker": "Add Player to Combat Tracker",
+      "Damage(s)": "Damage(s)",
       "player": {
         "FIELDS": {
           "user": {

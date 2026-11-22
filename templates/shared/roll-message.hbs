@@ -1,8 +1,8 @@
 <div class="dice-roll" data-action="expandRoll">
   <div class="dice-result">
     <div class="dice-formula">
-      {{#if rollLabel}}
-      {{localize rollLabel}}
+      {{#if (ne rollLabel "")}}
+      {{rollLabel}}
       {{/if}}
     </div>
     <div class="dice-tooltip">
@@ -25,7 +25,7 @@
 
     <h4 class="dice-total">
       {{#if rollDamage}}
-      {{rollDamageWBonus}} {{localize "Damage(s)"}}
+      {{rollDamageWBonus}} {{localize "Boundless.Combat.Damage(s)"}}
       {{else}}
       {{#if maxSuccesses}}
       2+ {{localize "Hits"}}
