@@ -163,9 +163,10 @@
       background: white;
       border: 2px solid black;
       display: grid;
+      min-height: 120px;
       grid-template-columns: 2fr 1fr 1fr;
       position: relative;
-      
+
       h4 {
         color: black;
         position: absolute;
@@ -197,11 +198,12 @@
       }
 
       .attribute-roll {
+        width: 45px;
         position: absolute;
-        top: 0;
-        bottom: 65%;
-        left: 42%;
-        right: 42%;
+        top: 65%;
+        bottom: 0;
+        left: 45%;
+        right: 45%;
       }
 
       .attribute-roll:hover {

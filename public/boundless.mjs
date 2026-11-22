@@ -99,7 +99,7 @@ class BoundlessActorSheet extends api$1.HandlebarsApplicationMixin(sheets$1.Acto
     classes: ["boundless", "actor", "standard-form"],
     position: {
       width: 600,
-      height: 600,
+      height: "auto",
     },
     actions: {
       viewDoc: this.#viewDoc,
@@ -246,7 +246,7 @@ class BoundlessActorSheet extends api$1.HandlebarsApplicationMixin(sheets$1.Acto
     fieldSets = await this._addField(systemFields["strength"], source, fieldSets, "current");
     fieldSets = await this._addField(systemFields["presence"], source, fieldSets, "current");
     fieldSets = await this._addField(systemFields["agility"], source, fieldSets, "current");
-    fieldSets = await this._addField(systemFields["willpower"], source, fieldSets, "current");  
+    fieldSets = await this._addField(systemFields["willpower"], source, fieldSets, "current");
     }
     fieldSets = await this._addField(systemFields["hitPoints"], source, fieldSets, null);
     if (doc.type === "npc") {
