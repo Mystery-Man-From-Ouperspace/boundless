@@ -1,0 +1,66 @@
+{
+  "id": "boundless",
+  "title": "Boundless RPG",
+  "description": "A community contributed game system for Boundless",
+  "version": "0.1.0",
+  "compatibility": {
+    "minimum": "13.351",
+    "verified": "14"
+  },
+  "authors": [
+    {
+      "name": "Cregg Hancock",
+      "email": "creggh@tutamail.com",
+      "mastodon": "@cregg@gamedev.lgbt",
+      "discord": "creggplant"
+    }
+  ],
+  "esmodules": ["public/boundless.mjs"],
+  "styles": ["boundless.css"],
+  "packs": [
+    {
+      "name": "gear",
+      "label": "Gear",
+      "type": "Item",
+      "path": "packs/gear",
+      "system": "boundless"
+    },
+    {
+      "name": "bestiary",
+      "label": "Bestiary",
+      "type": "Actor",
+      "path": "packs/bestiary",
+      "system": "boundless"
+    }
+  ],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    }
+  ],
+  "documentTypes": {
+    "Actor": {
+      "player": {},
+      "npc": {}
+    },
+    "Item": {
+      "armor": {},
+      "weapon": {},
+      "basic": {},
+      "spell": {},
+      "condition": {}
+    }
+  },
+  "grid": {
+    "distance": 5,
+    "units": "ft"
+  },
+  "initiative": "1d6",
+  "primaryTokenAttribute": "current",
+  "secondaryTokenAttribute": "",
+  "url": "https://codeberg.org/CreggHancock/foundryvtt-boundless",
+  "manifest": "https://codeberg.org/CreggHancock/foundryvtt-boundless/raw/branch/main/system.json",
+  "download": "AUTOMATIC"
+}

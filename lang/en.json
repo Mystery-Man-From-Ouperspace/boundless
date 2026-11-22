@@ -1,0 +1,86 @@
+{
+  "Boundless": {
+    "Actor": {
+      "FIELDS": {
+        "hitPoints": {
+          "label": "Hit Points",
+          "current": {
+            "label": "Current"
+          },
+          "max": {
+            "label": "Max"
+          }
+        },
+        "strength": {
+          "label": "Strength",
+          "current": { "label": "Current" },
+          "max": { "label": "Max" }
+        },
+        "presence": {
+          "label": "Presence",
+          "current": { "label": "Current" },
+          "max": { "label": "Max" }
+        },
+        "agility": {
+          "label": "Agility",
+          "current": { "label": "Current" },
+          "max": { "label": "Max" }
+        },
+        "willpower": {
+          "label": "Willpower",
+          "current": { "label": "Current" },
+          "max": { "label": "Max" }
+        }
+      }
+    },
+    "Sheets": {
+      "Labels": {
+        "ActorSheet": "Default Boundless Actor Sheet",
+        "ItemSheet": "Default Boundless Item Sheet",
+        "AddItem": "Add Item",
+        "Roll": "Roll",
+        "PresenceCheck": "Presence Check",
+        "AgilityCheck": "Agility Check",
+        "StrengthCheck": "Strength Check",
+        "WillpowerCheck": "Willpower Check"
+      },
+      "Tabs": {
+        "attributes": "Attributes",
+        "items": "Slots",
+        "notes": "Notes"
+      }
+    },
+    "Combat": {
+      "AddPlayer": "Add Player",
+      "AddPlayerCombatTracker": "Add Player to Combat Tracker",
+      "player": {
+        "FIELDS": {
+          "user": {
+            "label": "Player"
+          }
+        }
+      }
+    }
+  },
+  "TYPES": {
+    "Actor": {
+      "player": "Player",
+      "npc": "NPC"
+    },
+    "Item": {
+      "armor": "Armor",
+      "weapon": "Weapon",
+      "basic": "Basic",
+      "spell": "Spell",
+      "condition": "Condition"
+    },
+    "Position": {
+      "label": "Position",
+      "absolute": "Absolute",
+      "good": "Good",
+      "standard": "Standard",
+      "bad": "Bad",
+      "impossible": "Impossible"
+    }
+  }
+}

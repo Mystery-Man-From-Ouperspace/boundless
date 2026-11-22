@@ -1,0 +1,38 @@
+{
+  "name": "boundless-foundryvtt",
+  "version": "0.1.0",
+  "description": "Boundless system for FoundryVTT",
+  "main": "index.js",
+  "scripts": {
+    "build": "rollup -c",
+    "createSymlinks": "node ./tools/create-symlinks.mjs",
+    "postinstall": "npm run createSymlinks",
+    "lint": "eslint boundless.mjs src/module/**/* templates/**/*",
+    "lint:fix": "eslint --fix boundless.mjs src/module/**/* templates/**/*",
+    "prettier": "npx prettier . --write"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://codeberg.org/CreggHancock/foundryvtt-boundless"
+  },
+  "keywords": [
+    "fvtt",
+    "system"
+  ],
+  "author": "Cregg Hancock",
+  "bugs": {
+    "url": "https://codeberg.org/CreggHancock/foundryvtt-boundless/issues"
+  },
+  "homepage": "https://codeberg.org/CreggHancock/foundryvtt-boundless",
+  "devDependencies": {
+    "@eslint/js": "^9.27.0",
+    "@html-eslint/eslint-plugin": "^0.26.0",
+    "@html-eslint/parser": "^0.26.0",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@stylistic/eslint-plugin": "^5.5.0",
+    "eslint": "^9.27.0",
+    "eslint-plugin-jsdoc": "^51.4.1",
+    "prettier": "3.9.4",
+    "rollup": "^4.9.1"
+  }
+}

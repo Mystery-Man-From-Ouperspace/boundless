@@ -1,0 +1,38 @@
+<div class="dice-roll" data-action="expandRoll">
+  <div class="dice-result">
+    <div class="dice-formula">
+      {{#if rollLabel}}
+      {{localize rollLabel}}
+      {{/if}}
+    </div>
+    <div class="dice-tooltip">
+      <div class="wrapper">
+        <section class="tooltip-part">
+          <div class="dice">
+            <header class="part-header flexrow">
+              <span class="part-formula">{{formula}}</span>
+              <span class="part-position">{{localize position}}</span>
+            </header>
+            <ol class="dice-rolls">
+              {{#each rolls as |roll|}}
+              <li class="roll die d6">{{roll.result}}</li>
+              {{/each}}
+            </ol>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <h4 class="dice-total">
+      {{#if maxSuccesses}}
+      2+ {{localize "Hits"}}
+      {{else}}
+      {{#if success}}
+      1 {{localize "Hit"}}
+      {{else}}
+      0 {{localize "Hits"}}
+      {{/if}}
+      {{/if}}
+    </h4>
+  </div>
+</div>
