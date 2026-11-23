@@ -363,7 +363,6 @@
               color: white;
             }
           }
-
         }
 
         .attribute-roll {
@@ -372,8 +371,6 @@
           }
         }
       }
-
-
 
       .hitpoints {
 
@@ -422,8 +419,6 @@
           }
         }
       }
-
-
     }
 
     .tab.active[data-tab="items"] {
@@ -447,7 +442,6 @@
           color: white;
         }
         .document-controls {
-          flex: 0 0 50px;
           color: white;
         }
       }
