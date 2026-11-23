@@ -177,7 +177,7 @@ export class BoundlessActorSheet extends api.HandlebarsApplicationMixin(sheets.A
   async _addField(field, source, fieldSets, rollValuePath) {
     const path = `system.${field.name}`;
     if (field instanceof foundry.data.fields.SchemaField) {
-      const legend = game.i18n.localize(`Boundless.myFieldsLibels.${field.label}`);
+      const legend = game.i18n.localize(field.label);
       const fieldset = {
         fieldset: true,
           label: field.name,
@@ -335,7 +335,7 @@ export class BoundlessActorSheet extends api.HandlebarsApplicationMixin(sheets.A
     const rollLabel = game.i18n.localize(rollLabelBeforeTranslation);
     let fdObject = {};
     let rollBonus = 0;
-    if (target.dataset.rollLabel === "damage") {
+    if (target.dataset.rollLabel === "battle") {
       fdObject = await foundry.applications.api.DialogV2.input({
         window: { title: "Boundless.Sheets.Labels.Roll" },
         content: `
@@ -371,7 +371,7 @@ export class BoundlessActorSheet extends api.HandlebarsApplicationMixin(sheets.A
     const source = doc._source;
     const rollAmount = foundry.utils.getProperty(source, target.dataset.rollPath);
 
-    const rollDamage = (target.dataset.rollLabel === "damage");
+    const rollDamage = (target.dataset.rollLabel === "battle");
     if (rollDamage) {
       await rollCheck(rollAmount, rollBonus, targetLabel, rollLabel, "standard", rollDamage);
     } else {

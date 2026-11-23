@@ -109,7 +109,7 @@ export class BoundlessItemSheet extends api.HandlebarsApplicationMixin(sheets.It
     for (const field of Object.values(systemFields ?? {})) {
       const path = `system.${field.name}`;
       if (field instanceof foundry.data.fields.SchemaField) {
-        const legend = game.i18n.localize(`Boundless.myFieldsLibels.${field.label}`);
+        const legend = game.i18n.localize(field.label);
         const fieldset = {
           fieldset: true,
           label: field.name,

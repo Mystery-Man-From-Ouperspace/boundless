@@ -28,7 +28,6 @@ const systemPath = (path) => `systems/${systemID}/${path}`;
 async function rollCheck(rollAmount, rollBonus, targetLabel, rollLabel, position, rollDamage) {
   const speaker = foundry.documents.ChatMessage.getSpeaker();
   const roll = new foundry.dice.Roll(`${rollAmount}d6`);
-  console.log(`{rollAmount}d6`, `${rollAmount}d6`)
   await roll.evaluate();
 
   let successCount = 0;
@@ -246,14 +245,14 @@ class BoundlessActorSheet extends api$1.HandlebarsApplicationMixin(sheets$1.Acto
 
 
     if (doc.type === "player") {
-    fieldSets = await this._addField(systemFields["strength"], source, fieldSets, "current");
-    fieldSets = await this._addField(systemFields["presence"], source, fieldSets, "current");
-    fieldSets = await this._addField(systemFields["agility"], source, fieldSets, "current");
-    fieldSets = await this._addField(systemFields["willpower"], source, fieldSets, "current");
+    fieldSets = await this._addField(systemFields["strength"], source, fieldSets, 'current');
+    fieldSets = await this._addField(systemFields["presence"], source, fieldSets, 'current');
+    fieldSets = await this._addField(systemFields["agility"], source, fieldSets,'current');
+    fieldSets = await this._addField(systemFields["willpower"], source, fieldSets, 'current');
     }
     fieldSets = await this._addField(systemFields["hitPoints"], source, fieldSets, null);
     if (doc.type === "npc") {
-    fieldSets = await this._addField(systemFields["battle"], source, fieldSets, "damage");
+    fieldSets = await this._addField(systemFields["battle"], source, fieldSets, 'damage');
     }
 
 
@@ -266,10 +265,11 @@ class BoundlessActorSheet extends api$1.HandlebarsApplicationMixin(sheets$1.Acto
    * Add system model fields to the fieldset.
    */
   async _addField(field, source, fieldSets, rollValuePath) {
+    await console.log("rollValuePath", rollValuePath);
     const path = `system.${field.name}`;
     if (field instanceof foundry.data.fields.SchemaField) {
       console.log("field", field);
-      const legend = game.i18n.localize(`Boundless.myFieldsLibels.${field.label}`);
+      const legend = game.i18n.localize(field.label);
       const fieldset = {
         fieldset: true,
         label: field.name,
@@ -429,7 +429,7 @@ class BoundlessActorSheet extends api$1.HandlebarsApplicationMixin(sheets$1.Acto
     let fdObject = {};
     let rollBonus = 0;
     console.log("target.dataset.rollLabel", target.dataset.rollLabel);
-    if (target.dataset.rollLabel === "armor") {
+    if (target.dataset.rollLabel === "battle") {
       fdObject = await foundry.applications.api.DialogV2.input({
         window: { title: "Boundless.Sheets.Labels.Roll" },
         content: `
@@ -464,7 +464,7 @@ class BoundlessActorSheet extends api$1.HandlebarsApplicationMixin(sheets$1.Acto
     const source = doc._source;
     const rollAmount = foundry.utils.getProperty(source, target.dataset.rollPath);
 
-    const rollDamage = (target.dataset.rollLabel === "damage");
+    const rollDamage = (target.dataset.rollLabel === "battle");
     if (rollDamage) {
       await rollCheck(rollAmount, rollBonus, targetLabel, rollLabel, "standard", rollDamage);
     } else {
@@ -673,7 +673,7 @@ class BoundlessItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemSheet
     for (const field of Object.values(systemFields ?? {})) {
       const path = `system.${field.name}`;
       if (field instanceof foundry.data.fields.SchemaField) {
-        const legend = game.i18n.localize(`Boundless.myFieldsLibels.${field.label}`);
+        const legend = game.i18n.localize(field.label);
         const fieldset = {
           fieldset: true,
           label: field.name,
