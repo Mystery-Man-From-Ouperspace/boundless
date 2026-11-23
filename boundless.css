@@ -16,6 +16,7 @@
 
     img {
       border: none;
+      background-color: black;
       flex: 0 0 100px;
       border-radius: 8px;
     }
@@ -113,6 +114,10 @@
         top: 65%;
         left: 42%;
         right: 42%;
+        .fas {
+          font-size: 35px;
+          color: black;
+        }
       }
 
       .attribute-roll:hover {
@@ -198,12 +203,15 @@
       }
 
       .attribute-roll {
-        width: 45px;
         position: absolute;
         top: 65%;
         bottom: 0;
         left: 45%;
         right: 45%;
+        .fas {
+          font-size: 35px;
+          color: black;
+        }
       }
 
       .attribute-roll:hover {
@@ -303,5 +311,149 @@
     width: 192px;
     top: -45px;
     left: calc(50% - 96px);
+  }
+}
+
+.theme-light {
+  .application.sheet.boundless {
+    &.actor,
+    &.item {
+      gap: 0;
+      .window-content {
+        background: #FFFFFF;
+      }
+    }
+
+    .sheet-header {
+      input[name="name"] {
+        background: black;
+        border: 4px solid white;
+        color: white;
+      }
+    }
+    .sheet-tabs {
+      background: black;
+
+      a {
+        color: white;
+      }
+    }
+    .tab.active[data-tab="attributes"] {
+      .strength,
+      .presence,
+      .agility,
+      .willpower {
+        background-color: black;
+
+        h4 {
+          background-color: white;
+          color: black;
+        }
+
+        .form-group {
+          label {
+            flex: unset;
+            color: white;
+          }
+
+          .form-fields {
+            input {
+              background: black;
+              border: 2px solid white;
+              color: white;
+            }
+          }
+
+        }
+
+        .attribute-roll {
+          .fas {
+            color: white;
+          }
+        }
+      }
+
+
+
+      .hitpoints {
+
+        background: black;
+        border: 2px solid white;
+
+        h4 {
+          color: white;
+        }
+
+        .form-group {
+          label {
+            color: white;
+          }
+
+          input {
+            background: black;
+            border: 2px solid white;
+            color: black;
+          }
+        }
+      }
+      .battle {
+        background: black;
+        border: 2px solid white;
+
+        h4 {
+          color: white;
+        }
+
+        .form-group {
+          label {
+            color: white;
+          }
+
+          input {
+            background: black;
+            border: 2px solid white;
+            color: white;
+          }
+        }
+
+        .attribute-roll {
+          .fas {
+            color: white;
+          }
+        }
+      }
+
+
+    }
+
+    .tab.active[data-tab="items"] {
+      .item-create {
+        color: black;
+      }
+      .item-create:disabled,
+      .item-create[disabled] {
+        color: darkgray;
+      }
+      .itemHeader {
+        border-bottom: 1px solid var(--color-border-light-primary);
+      }
+      .item {
+        border-top: 1px solid white;
+        border-right: 2px solid white;
+        border-left: 2px solid white;
+        background: black;
+
+        .item-name {
+          color: white;
+        }
+        .document-controls {
+          flex: 0 0 50px;
+          color: white;
+        }
+      }
+      .item:last-of-type {
+        border-bottom: 2px solid white;
+      }
+    }
   }
 }
