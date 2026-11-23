@@ -4,13 +4,10 @@
       "FIELDS": {
         "battle": {
           "label": "battle",
-          "label": "",
           "armor": {
-            "label": "armor",
             "label": "Armure"
           },
           "damage": {
-            "label": "damage",
             "label": "Dégâts"
           },
           "damageBonus": {
