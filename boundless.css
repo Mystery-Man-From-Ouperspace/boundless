@@ -314,13 +314,13 @@
   }
 }
 
-.theme-light {
+.theme-dark {
   .application.sheet.boundless {
     &.actor,
     &.item {
       gap: 0;
       .window-content {
-        background: #FFFFFF;
+        background: #383838;
       }
     }
 
