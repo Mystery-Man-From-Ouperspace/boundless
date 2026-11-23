@@ -25,9 +25,10 @@ const systemPath = (path) => `systems/${systemID}/${path}`;
 /**
  * Roll a check and add a ChatMessage with the result.
  */
-async function rollCheck(rollAmount, rollBonus, rollLabel, position, rollDamage) {
+async function rollCheck(rollAmount, rollBonus, targetLabel, rollLabel, position, rollDamage) {
   const speaker = foundry.documents.ChatMessage.getSpeaker();
   const roll = new foundry.dice.Roll(`${rollAmount}d6`);
+  console.log(`{rollAmount}d6`, `${rollAmount}d6`)
   await roll.evaluate();
 
   let successCount = 0;
@@ -71,6 +72,7 @@ async function rollCheck(rollAmount, rollBonus, rollLabel, position, rollDamage)
       maxSuccesses: successCount > 1,
       success: successCount > 0,
       rollLabel: rollLabel,
+      targetLabel: targetLabel,
       position: `TYPES.Position.${position}`,
       formula: formula,
       rolls: roll.dice[0].results,
@@ -237,6 +239,7 @@ class BoundlessActorSheet extends api$1.HandlebarsApplicationMixin(sheets$1.Acto
   async _getFields() {
     const doc = this.actor;
     const source = doc._source;
+    console.log("source", source);
     const systemFields = CONFIG.Actor.dataModels[doc.type]?.schema.fields;
 
     let fieldSets = [];
@@ -265,10 +268,12 @@ class BoundlessActorSheet extends api$1.HandlebarsApplicationMixin(sheets$1.Acto
   async _addField(field, source, fieldSets, rollValuePath) {
     const path = `system.${field.name}`;
     if (field instanceof foundry.data.fields.SchemaField) {
+      console.log("field", field);
+      const legend = game.i18n.localize(`Boundless.myFieldsLibels.${field.label}`);
       const fieldset = {
         fieldset: true,
-        legend: field.libel,
-        label: field.label,
+        label: field.name,
+        legend: legend,
         className: field.name.toLowerCase(),
         canRoll: !!rollValuePath,
         rollValuePath: rollValuePath ? `${path}.${rollValuePath}` : "",
@@ -297,6 +302,7 @@ class BoundlessActorSheet extends api$1.HandlebarsApplicationMixin(sheets$1.Acto
         fieldset.fields.push({ field, value: foundry.utils.getProperty(source, path) });
       }
     }
+    console.log("fieldset", fieldset);
   }
 
   /* -------------------------------------------------- */
@@ -422,7 +428,8 @@ class BoundlessActorSheet extends api$1.HandlebarsApplicationMixin(sheets$1.Acto
     const rollLabel = game.i18n.localize(rollLabelBeforeTranslation);
     let fdObject = {};
     let rollBonus = 0;
-    if (target.dataset.rollLabel === "battle") {
+    console.log("target.dataset.rollLabel", target.dataset.rollLabel);
+    if (target.dataset.rollLabel === "armor") {
       fdObject = await foundry.applications.api.DialogV2.input({
         window: { title: "Boundless.Sheets.Labels.Roll" },
         content: `
@@ -457,11 +464,11 @@ class BoundlessActorSheet extends api$1.HandlebarsApplicationMixin(sheets$1.Acto
     const source = doc._source;
     const rollAmount = foundry.utils.getProperty(source, target.dataset.rollPath);
 
-    const rollDamage = (target.dataset.rollLabel === "battle");
+    const rollDamage = (target.dataset.rollLabel === "damage");
     if (rollDamage) {
-      await rollCheck(rollAmount, rollBonus, rollLabel, "standard", rollDamage);
+      await rollCheck(rollAmount, rollBonus, targetLabel, rollLabel, "standard", rollDamage);
     } else {
-      await rollCheck(rollAmount, rollBonus, rollLabel, fdObject.position, rollDamage);
+      await rollCheck(rollAmount, rollBonus, targetLabel, rollLabel, fdObject.position, rollDamage);
     }
   }
 
@@ -660,18 +667,26 @@ class BoundlessItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemSheet
     const doc = this.item;
     const source = doc._source;
     const systemFields = CONFIG.Item.dataModels[doc.type]?.schema.fields;
+    console.log("systemFields", systemFields);
     const fieldSets = [];
     // TODO: Find a clever way to handle enrichment
     for (const field of Object.values(systemFields ?? {})) {
       const path = `system.${field.name}`;
       if (field instanceof foundry.data.fields.SchemaField) {
-        const fieldset = { fieldset: true, legend: field.libel, fields: [] };
+        const legend = game.i18n.localize(`Boundless.myFieldsLibels.${field.label}`);
+        const fieldset = {
+          fieldset: true,
+          label: field.name,
+          legend: legend,
+          fields: []
+        };
         await this.#addSystemFields(fieldset, field.fields, source, path);
         fieldSets.push(fieldset);
       } else {
         fieldSets.push({ outer: { field, value: foundry.utils.getProperty(source, path) } });
       }
     }
+    console.log("fieldSets", fieldSets);
     return fieldSets;
   }
 

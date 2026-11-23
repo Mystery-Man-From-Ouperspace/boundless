@@ -1,0 +1,135 @@
+{
+  "Boundless": {
+    "Actor": {
+      "FIELDS": {
+        "battle": {
+          "label": "battle",
+          "libel": "",
+          "armor": {
+            "label": "armor",
+            "libel": "Armure"
+          },
+          "damage": {
+            "label": "damage",
+            "libel": "Dégâts"
+          },
+          "damageBonus": {
+            "label": "damageBonus",
+            "libel": "Bonus aux dégâts"
+          }
+        },
+        "hitPoints": {
+          "label": "hitPoints",
+          "libel": "Points de coup",
+          "current": {
+            "label": "current",
+            "libel": "Courants"
+          },
+          "max": {
+            "label": "max",
+            "libel": "Max"
+          }
+        },
+        "strength": {
+          "label": "strength",
+          "libel": "Force",
+          "current": {
+            "label": "current",
+            "libel": "Courants"
+          },
+          "max": {
+            "label": "max",
+            "libel": "Max"
+          }
+        },
+        "presence": {
+          "label": "presence",
+          "libel": "Présence",
+          "current": {
+            "label": "current",
+            "libel": "Courants"
+          },
+          "max": {
+            "label": "max",
+            "libel": "Max"
+          }
+        },
+        "agility": {
+          "label": "agility",
+          "libel": "Agilité",
+          "current": {
+            "label": "current",
+            "libel": "Courants"
+          },
+          "max": {
+            "label": "max",
+            "libel": "Max"
+          }
+        },
+        "willpower": {
+          "label": "willpower",
+          "libel": "Volonté",
+          "current": {
+            "label": "current",
+            "libel": "Courants"
+          },
+          "max": {
+            "label": "max",
+            "libel": "Max"
+          }
+        }
+      }
+    },
+    "Sheets": {
+      "Labels": {
+        "ActorSheet": "Feuille d'acteur Boundless par défaut",
+        "ItemSheet": "Feuille d'objet Boundless par défaut",
+        "AddItem": "Ajouter objet",
+        "Roll": "Jet",
+        "presenceCheck": "Test de Présence",
+        "agilityCheck": "Test d'Agilité",
+        "strengthCheck": "Test de Force",
+        "willpowerCheck": "Test de Volonté",
+        "battleCheck": "Jet de dégâts"
+      },
+      "Tabs": {
+        "attributes": "Attributs",
+        "items": "Emplacements",
+        "notes": "Notes"
+      }
+    },
+    "Combat": {
+      "AddPlayer": "Ajouter joueur",
+      "AddPlayerCombatTracker": "Ajouter joueur au Combat Tracker",
+      "Damage(s)": "Dégât(s)",
+      "player": {
+        "FIELDS": {
+          "user": {
+            "label": "Joueur"
+          }
+        }
+      }
+    }
+  },
+  "TYPES": {
+    "Actor": {
+      "player": "Joueur",
+      "npc": "PNJ"
+    },
+    "Item": {
+      "armor": "Armure",
+      "weapon": "Arme",
+      "basic": "Basique",
+      "spell": "Sort",
+      "condition": "Condition"
+    },
+    "Position": {
+      "label": "Position",
+      "absolute": "Absolue",
+      "good": "Bonne",
+      "standard": "Standard",
+      "bad": "Mauvaise",
+      "impossible": "Impossible"
+    }
+  }
+}

@@ -15,7 +15,7 @@ export class BoundlessActorSheet extends api.HandlebarsApplicationMixin(sheets.A
     classes: ["boundless", "actor", "standard-form"],
     position: {
       width: 600,
-      height: 600,
+      height: "auto",
     },
     actions: {
       viewDoc: this.#viewDoc,
@@ -120,6 +120,8 @@ export class BoundlessActorSheet extends api.HandlebarsApplicationMixin(sheets.A
         break;
       case "notes":
         context.notes = await this._getNotes();
+        context.enrichedDescription = await foundry.applications.ux.TextEditor.implementation.enrichHTML(context.notes.outer.value, { async: true });
+
         context.tab = context.tabs[partId];
         break;
     }
@@ -153,11 +155,16 @@ export class BoundlessActorSheet extends api.HandlebarsApplicationMixin(sheets.A
     const systemFields = CONFIG.Actor.dataModels[doc.type]?.schema.fields;
 
     let fieldSets = [];
+    if (doc.type === "player") {
     fieldSets = await this._addField(systemFields["strength"], source, fieldSets, "current");
     fieldSets = await this._addField(systemFields["presence"], source, fieldSets, "current");
     fieldSets = await this._addField(systemFields["agility"], source, fieldSets, "current");
     fieldSets = await this._addField(systemFields["willpower"], source, fieldSets, "current");
+    }
     fieldSets = await this._addField(systemFields["hitPoints"], source, fieldSets, null);
+    if (doc.type === "npc") {
+    fieldSets = await this._addField(systemFields["battle"], source, fieldSets, "damage");
+    }
 
     return fieldSets;
   }
@@ -170,9 +177,11 @@ export class BoundlessActorSheet extends api.HandlebarsApplicationMixin(sheets.A
   async _addField(field, source, fieldSets, rollValuePath) {
     const path = `system.${field.name}`;
     if (field instanceof foundry.data.fields.SchemaField) {
+      const legend = game.i18n.localize(`Boundless.myFieldsLibels.${field.label}`);
       const fieldset = {
         fieldset: true,
-        legend: field.label,
+          label: field.name,
+          legend: legend,
         className: field.name.toLowerCase(),
         canRoll: !!rollValuePath,
         rollValuePath: rollValuePath ? `${path}.${rollValuePath}` : "",
@@ -321,21 +330,38 @@ export class BoundlessActorSheet extends api.HandlebarsApplicationMixin(sheets.A
         `<option value='${t}' ${t === "standard" ? "selected" : ""}>${game.i18n.localize(`TYPES.Position.${t}`)}</option>`,
     );
 
-    const rollLabel = game.i18n.localize(`Boundless.Sheets.Labels.${target.dataset.rollLabel}Check`);
-    const fdObject = await foundry.applications.api.DialogV2.input({
-      window: { title: "Boundless.Sheets.Labels.Roll" },
-      content: `
-        <div>
-          <h1>${rollLabel}</h1>
-          <label>
-          ${game.i18n.localize("TYPES.Position.label")}
-          <select name='position'>
-          ${options}
-          </select>
-          </label>
-        </div>
-        `,
-    });
+    const targetLabel = target.dataset.rollLabel;
+    const rollLabelBeforeTranslation = `Boundless.Sheets.Labels.`+targetLabel+`Check`
+    const rollLabel = game.i18n.localize(rollLabelBeforeTranslation);
+    let fdObject = {};
+    let rollBonus = 0;
+    if (target.dataset.rollLabel === "damage") {
+      fdObject = await foundry.applications.api.DialogV2.input({
+        window: { title: "Boundless.Sheets.Labels.Roll" },
+        content: `
+          <div>
+            <h1>${rollLabel}</h1>
+          </div>
+          `,
+      });
+      // rollBonus = await _getBattle().damageBonus;
+      rollBonus = this.actor.system.battle.damageBonus;
+    } else {
+      fdObject = await foundry.applications.api.DialogV2.input({
+        window: { title: "Boundless.Sheets.Labels.Roll" },
+        content: `
+          <div>
+            <h1>${rollLabel}</h1>
+            <label>
+            ${game.i18n.localize("TYPES.Position.label")}
+            <select name='position'>
+            ${options}
+            </select>
+            </label>
+          </div>
+          `,
+      });
+    }
 
     if (!fdObject) {
       return;
@@ -345,7 +371,12 @@ export class BoundlessActorSheet extends api.HandlebarsApplicationMixin(sheets.A
     const source = doc._source;
     const rollAmount = foundry.utils.getProperty(source, target.dataset.rollPath);
 
-    await rollCheck(rollAmount, rollLabel, fdObject.position);
+    const rollDamage = (target.dataset.rollLabel === "damage");
+    if (rollDamage) {
+      await rollCheck(rollAmount, rollBonus, targetLabel, rollLabel, "standard", rollDamage);
+    } else {
+      await rollCheck(rollAmount, rollBonus, targetLabel, rollLabel, fdObject.position, rollDamage);
+    }
   }
 
   /* -------------------------------------------------- */

@@ -4,81 +4,78 @@
       "FIELDS": {
         "battle": {
           "label": "battle",
-          "libel": "",
+          "label": "",
           "armor": {
             "label": "armor",
-            "libel": "Armure"
+            "label": "Armure"
           },
           "damage": {
             "label": "damage",
-            "libel": "Dégâts"
+            "label": "Dégâts"
           },
           "damageBonus": {
-            "label": "damageBonus",
-            "libel": "Bonus aux dégâts"
+            "label": "Bonus aux dégâts"
           }
         },
         "hitPoints": {
-          "lbel": "hitPoints",
-          "libel": "Points de coup",
+          "label": "Points de coup",
           "current": {
-            "label": "courants",
-            "libel": "Courants"
+            "label": "Courants"
           },
           "max": {
-            "label": "Max",
-            "libel": "Max"
+            "label": "Max"
           }
         },
         "strength": {
-          "label": "strength",
-          "libel": "Force",
+          "label": "Force",
           "current": {
-            "label": "courants",
-            "libel": "Courants"
+            "label": "Courants"
           },
           "max": {
-            "label": "Max",
-            "libel": "Max"
+            "label": "Max"
           }
         },
         "presence": {
-          "label": "presence",
-          "libel": "Présence",
+          "label": "Présence",
           "current": {
-            "label": "courants",
-            "libel": "Courants"
+            "label": "Courants"
           },
           "max": {
-            "label": "Max",
-            "libel": "Max"
+            "label": "Max"
           }
         },
         "agility": {
-          "label": "agility",
-          "libel": "Agilité",
+          "label": "Agilité",
           "current": {
-            "label": "courants",
-            "libel": "Courants"
+            "label": "Courants"
           },
           "max": {
-            "label": "Max",
-            "libel": "Max"
+            "label": "Max"
           }
         },
         "willpower": {
-          "label": "willpower",
-          "libel": "Volonté",
+          "label": "Volonté",
           "current": {
-            "label": "courants",
-            "libel": "Courants"
+            "label": "Courants"
           },
           "max": {
-            "label": "Max",
-            "libel": "Max"
+            "label": "Max"
           }
         }
       }
+    },
+    "myFieldsLibels": {
+      "battle": "",
+      "armor": "Armure",
+      "damage": "Dégâts",
+      "damageBonus": "Bonus dégâts",
+      "hitPoints": "Points de coup",
+      "strength": "Force",
+      "presence": "Présence",
+      "agility": "Agilité",
+      "willpower": "Volonté",
+      "current": "Courants",
+      "max": "Max"
     },
     "Sheets": {
       "Labels": {
@@ -86,10 +83,10 @@
         "ItemSheet": "Feuille d'objet Boundless par défaut",
         "AddItem": "Ajouter objet",
         "Roll": "Jet",
-        "presenceCheck": "Check de présence",
-        "agilityCheck": "Check d'agilité",
-        "strengthCheck": "Check de force",
-        "willpowerCheck": "Check de volonté",
+        "presenceCheck": "Test de Présence",
+        "agilityCheck": "Test d'Agilité",
+        "strengthCheck": "Test de Force",
+        "willpowerCheck": "Test de Volonté",
         "battleCheck": "Jet de dégâts"
       },
       "Tabs": {

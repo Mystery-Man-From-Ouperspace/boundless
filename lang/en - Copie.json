@@ -1,0 +1,135 @@
+{
+  "Boundless": {
+    "Actor": {
+      "FIELDS": {
+        "battle": {
+          "label": "battle",
+          "libel": "",
+          "armor": {
+            "label": "armor",
+            "libel": "Armor"
+          },
+          "damage": {
+            "label": "damage",
+            "libel": "Damage"
+          },
+          "damageBonus": {
+            "label": "damageBonus",
+            "libel": "Damage Bonus"
+          }
+        },
+        "hitPoints": {
+          "label": "hitPoints",
+          "libel": "Hit Points",
+          "current": {
+            "label": "current",
+            "libel": "Current"
+          },
+          "max": {
+            "label": "max",
+            "libel": "Max"
+          }
+        },
+        "strength": {
+          "label": "strength",
+          "libel": "Strength",
+          "current": {
+            "label": "current",
+            "libel": "Current"
+          },
+          "max": {
+            "label": "max",
+            "libel": "Max"
+          }
+        },
+        "presence": {
+          "label": "presence",
+          "libel": "Presence",
+          "current": {
+            "label": "current",
+            "libel": "Current"
+          },
+          "max": {
+            "label": "max",
+            "libel": "Max"
+          }
+        },
+        "agility": {
+          "label": "agility",
+          "libel": "Agility",
+          "current": {
+            "label": "current",
+            "libel": "Current"
+          },
+          "max": {
+            "label": "max",
+            "libel": "Max"
+          }
+        },
+        "willpower": {
+          "label": "willpower",
+          "libel": "Willpower",
+          "current": {
+            "label": "current",
+            "libel": "Current"
+          },
+          "max": {
+            "label": "max",
+            "libel": "Max"
+          }
+        }
+      }
+    },
+    "Sheets": {
+      "Labels": {
+        "ActorSheet": "Default Boundless Actor Sheet",
+        "ItemSheet": "Default Boundless Item Sheet",
+        "AddItem": "Add Item",
+        "Roll": "Roll",
+        "presenceCheck": "Presence Check",
+        "agilityCheck": "Agility Check",
+        "strengthCheck": "Strength Check",
+        "willpowerCheck": "Willpower Check",
+        "battleCheck": "Damage Roll"
+      },
+      "Tabs": {
+        "attributes": "Attributes",
+        "items": "Slots",
+        "notes": "Notes"
+      }
+    },
+    "Combat": {
+      "AddPlayer": "Add Player",
+      "AddPlayerCombatTracker": "Add Player to Combat Tracker",
+      "Damage(s)": "Damage(s)",
+      "player": {
+        "FIELDS": {
+          "user": {
+            "label": "Player"
+          }
+        }
+      }
+    }
+  },
+  "TYPES": {
+    "Actor": {
+      "player": "Player",
+      "npc": "NPC"
+    },
+    "Item": {
+      "armor": "Armor",
+      "weapon": "Weapon",
+      "basic": "Basic",
+      "spell": "Spell",
+      "condition": "Condition"
+    },
+    "Position": {
+      "label": "Position",
+      "absolute": "Absolute",
+      "good": "Good",
+      "standard": "Standard",
+      "bad": "Bad",
+      "impossible": "Impossible"
+    }
+  }
+}

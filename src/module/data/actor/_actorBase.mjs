@@ -12,7 +12,7 @@ export default class ActorBaseBoundless extends foundry.abstract.TypeDataModel {
         current: new NumberField(),
         max: new NumberField(),
       }),
-      notes: new HTMLField(),
+      notes: new HTMLField({}),
     };
   }
 

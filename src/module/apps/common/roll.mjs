@@ -5,13 +5,13 @@ import { systemPath } from "../../constants.mjs";
 /**
  * Roll a check and add a ChatMessage with the result.
  */
-export async function rollCheck(rollAmount, rollLabel, position) {
+export async function rollCheck(rollAmount, rollBonus, targetLabel, rollLabel, position, rollDamage) {
   const speaker = foundry.documents.ChatMessage.getSpeaker();
   const roll = new foundry.dice.Roll(`${rollAmount}d6`);
   await roll.evaluate();
 
   let successCount = 0;
-  let minimumRoll;
+  let minimumRoll = 5;
   switch (position) {
     case "absolute":
       minimumRoll = 1;
@@ -28,6 +28,7 @@ export async function rollCheck(rollAmount, rollLabel, position) {
     case "impossible":
       minimumRoll = 7;
       break;
+    default:;
   }
 
   for (let i = 0; i < roll.dice.length; i++) {
@@ -39,14 +40,20 @@ export async function rollCheck(rollAmount, rollLabel, position) {
     }
   }
 
+  const rollDamageWBonus = parseInt(roll.result)+parseInt(rollBonus);
+  let formula = `${rollAmount}D`;
+  if (rollDamage) {formula += `+${rollBonus}`};
   const renderedTemplate = await foundry.applications.handlebars.renderTemplate(
     systemPath("templates/shared/roll-message.hbs"),
     {
+      rollDamage: rollDamage,
+      rollDamageWBonus: rollDamageWBonus,
       maxSuccesses: successCount > 1,
       success: successCount > 0,
       rollLabel: rollLabel,
+      targetLabel: targetLabel,
       position: `TYPES.Position.${position}`,
-      formula: `${rollAmount}D`,
+      formula: formula,
       rolls: roll.dice[0].results,
     },
   );

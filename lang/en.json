@@ -3,56 +3,61 @@
     "Actor": {
       "FIELDS": {
         "battle": {
-          "label": "battle",
-          "libel": "",
+          "label": "Battle",
           "armor": {
-            "label": "armor",
-            "libel": "Armor"
+          "label": "Armor"
           },
           "damage": {
-            "label": "damage",
-            "libel": "Damage"
+            "label": "Damage"
           },
           "damageBonus": {
-            "label": "damageBonus",
-            "libel": "Damage Bonus"
+            "label": "Damage Bonus"
           }
         },
         "hitPoints": {
-          "label": "hitPoints",
-          "libel": "Hit Points",
+          "label": "Hit Points",
           "current": {
-            "label": "current",
-            "libel": "Current"
+            "label": "Current"
           },
           "max": {
-            "label": "max",
-            "libel": "Max"
+            "label": "Max"
           }
         },
         "strength": {
-          "label": "strength",
-          "libel": "Strength",
-          "current": { "label": "Current" },
-          "max": { "label": "Max" }
+          "label": "Strength",
+          "current": {
+            "label": "Current"
+          },
+          "max": {
+            "label": "Max"
+          }
         },
         "presence": {
-          "label": "presence",
-          "libel": "Presence",
-          "current": { "label": "Current" },
-          "max": { "label": "Max" }
+          "label": "Presence",
+          "current": {
+            "label": "Current"
+          },
+          "max": {
+            "label": "Max"
+          }
         },
         "agility": {
-          "label": "agility",
-          "libel": "Agility",
-          "current": { "label": "Current" },
-          "max": { "label": "Max" }
+          "label": "Agility",
+          "current": {
+            "label": "Current"
+          },
+          "max": {
+            "label": "Max"
+          }
         },
         "willpower": {
-          "label": "willpower",
-          "libel": "Willpower",
-          "current": { "label": "Current" },
-          "max": { "label": "Max" }
+          "label": "Willpower",
+          "current": {
+            "label": "Current"
+          },
+          "max": {
+            "label": "Max"
+          }
         }
       }
     },
@@ -66,7 +71,7 @@
         "agilityCheck": "Agility Check",
         "strengthCheck": "Strength Check",
         "willpowerCheck": "Willpower Check",
-        "Check": "Damage Roll"
+        "battleCheck": "Damage Roll"
       },
       "Tabs": {
         "attributes": "Attributes",

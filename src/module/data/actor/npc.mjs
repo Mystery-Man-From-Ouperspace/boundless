@@ -8,12 +8,15 @@ export default class NpcBoundless extends ActorBaseBoundless {
 
   /** @inheritdoc */
   static defineSchema() {
-    const { NumberField } = foundry.data.fields;
+    const { SchemaField, NumberField } = foundry.data.fields;
     const schema = {
-      armor: new NumberField(),
-      damage: new NumberField(),
-    };
+      battle: new SchemaField({
+        armor: new NumberField(),
+        damage: new NumberField(),
+        damageBonus: new NumberField(),
 
+      }),
+    };
     return Object.assign(super.defineSchema(), schema);
   }
 }
