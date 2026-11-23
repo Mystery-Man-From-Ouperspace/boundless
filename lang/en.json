@@ -3,9 +3,9 @@
     "Actor": {
       "FIELDS": {
         "battle": {
-          "label": "Battle",
+          "label": "",
           "armor": {
-          "label": "Armor"
+            "label": "Armor"
           },
           "damage": {
             "label": "Damage"
