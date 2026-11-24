@@ -413,8 +413,8 @@ export class BoundlessActorSheet extends api.HandlebarsApplicationMixin(sheets.A
       await rollCheck(rollAmount, rollBonus, targetLabel, rollLabel, "standard", rollDamage, rollShortRest);
     } else if (rollShortRest) {
       const rollShortRestTotal = await rollCheck(1, rollBonus, targetLabel, rollLabel, "standard", rollDamage, rollShortRest);
-      const currentHP = this.actor.system.hitPoints.current;
-      const maxHP = this.actor.system.hitPoints.max;
+      const currentHP = doc.system.hitPoints.current;
+      const maxHP = doc.system.hitPoints.max;
       let newHP = currentHP + rollShortRestTotal;
       if (newHP > maxHP) {
         newHP = maxHP;
@@ -424,7 +424,7 @@ export class BoundlessActorSheet extends api.HandlebarsApplicationMixin(sheets.A
         actor.update({"system.hitPoints.current":newHP});
       }
 
-      setTimeout(update, 3000, this.actor, newHP);
+      setTimeout(update, 3000, doc, newHP);
 
     } else if (rollLongRest) {
       fdAbility = await foundry.applications.api.DialogV2.input({
@@ -444,8 +444,62 @@ export class BoundlessActorSheet extends api.HandlebarsApplicationMixin(sheets.A
     if (!fdAbility) {
       return;
     }
-    return ui.notifications.error(game.i18n.localize("Boundless.error.non-implemented"));
 
+    console.log("fdAbility.ability", fdAbility.ability);
+    let updatedAbilityCurrent;
+    let updatedAbilityMax;
+
+    switch (fdAbility.ability) {
+      case "strength":
+        updatedAbilityCurrent = doc.system.strength.current;
+        updatedAbilityMax = doc.system.strength.max;
+        break;
+      case "agility":
+        updatedAbilityCurrent = doc.system.agility.current;
+        updatedAbilityMax = doc.system.agility.max;
+        break;
+      case "presence":
+        updatedAbilityCurrent = doc.system.presence.current;
+        updatedAbilityMax = doc.system.presence.max;
+        break;
+      case "willpower":
+        updatedAbilityCurrent = doc.system.willpower.current;
+        updatedAbilityMax = doc.system.willpower.max;
+        break;
+      default:
+        updatedAbilityCurrent = doc.system.strength.current;
+        updatedAbilityMax = doc.system.strength.max;
+    }
+
+    console.log("updatedAbilityCurrent", updatedAbilityCurrent);
+    console.log("updatedAbilityMax", updatedAbilityMax);
+
+    updatedAbilityCurrent++;
+    if (updatedAbilityCurrent > updatedAbilityMax) {
+      updatedAbilityCurrent = updatedAbilityMax;
+    }
+
+    console.log("updatedAbilityCurrent", updatedAbilityCurrent);
+
+    switch (fdAbility.ability) {
+      case "strength":
+        doc.update({"system.strength.current":updatedAbilityCurrent});
+        break;
+      case "agility":
+        doc.update({"system.agility.current":updatedAbilityCurrent});
+        break;
+      case "presence":
+        doc.update({"system.presence.current":updatedAbilityCurrent});
+        break;
+      case "willpower":
+        doc.update({"system.willpower.current":updatedAbilityCurrent});
+        break;
+      default:
+        doc.update({"system.strength.current":updatedAbilityCurrent});
+        break;
+    }
+    const maxHP = doc.system.hitPoints.max;
+    doc.update({"system.hitPoints.current":maxHP});
     } else {
       await rollCheck(rollAmount, rollBonus, targetLabel, rollLabel, fdObject.position, rollDamage, rollShortRest);
     }
