@@ -542,68 +542,67 @@ class BoundlessActorSheet extends api$1.HandlebarsApplicationMixin(sheets$1.Acto
             </div>
             `,
         });
-      if (!fdAbility) {
-        return;
+        if (!fdAbility) {
+          return;
+        }
+
+        console.log("fdAbility.ability", fdAbility.ability);
+        let updatedAbilityCurrent;
+        let updatedAbilityMax;
+
+        switch (fdAbility.ability) {
+          case "strength":
+            updatedAbilityCurrent = doc.system.strength.current;
+            updatedAbilityMax = doc.system.strength.max;
+            break;
+          case "agility":
+            updatedAbilityCurrent = doc.system.agility.current;
+            updatedAbilityMax = doc.system.agility.max;
+            break;
+          case "presence":
+            updatedAbilityCurrent = doc.system.presence.current;
+            updatedAbilityMax = doc.system.presence.max;
+            break;
+          case "willpower":
+            updatedAbilityCurrent = doc.system.willpower.current;
+            updatedAbilityMax = doc.system.willpower.max;
+            break;
+          default:
+            updatedAbilityCurrent = doc.system.strength.current;
+            updatedAbilityMax = doc.system.strength.max;
+        }
+
+        console.log("updatedAbilityCurrent", updatedAbilityCurrent);
+        console.log("updatedAbilityMax", updatedAbilityMax);
+
+        updatedAbilityCurrent++;
+        if (updatedAbilityCurrent > updatedAbilityMax) {
+          updatedAbilityCurrent = updatedAbilityMax;
+        }
+
+        console.log("updatedAbilityCurrent", updatedAbilityCurrent);
+
+        switch (fdAbility.ability) {
+          case "strength":
+            doc.update({"system.strength.current":updatedAbilityCurrent});
+            break;
+          case "agility":
+            doc.update({"system.agility.current":updatedAbilityCurrent});
+            break;
+          case "presence":
+            doc.update({"system.presence.current":updatedAbilityCurrent});
+            break;
+          case "willpower":
+            doc.update({"system.willpower.current":updatedAbilityCurrent});
+            break;
+          default:
+            doc.update({"system.strength.current":updatedAbilityCurrent});
+        }
       }
+      const maxHP = doc.system.hitPoints.max;
+      doc.update({"system.hitPoints.current":maxHP});
 
-      console.log("fdAbility.ability", fdAbility.ability);
-      let updatedAbilityCurrent;
-      let updatedAbilityMax;
-
-      switch (fdAbility.ability) {
-        case "strength":
-          updatedAbilityCurrent = doc.system.strength.current;
-          updatedAbilityMax = doc.system.strength.max;
-          break;
-        case "agility":
-          updatedAbilityCurrent = doc.system.agility.current;
-          updatedAbilityMax = doc.system.agility.max;
-          break;
-        case "presence":
-          updatedAbilityCurrent = doc.system.presence.current;
-          updatedAbilityMax = doc.system.presence.max;
-          break;
-        case "willpower":
-          updatedAbilityCurrent = doc.system.willpower.current;
-          updatedAbilityMax = doc.system.willpower.max;
-          break;
-        default:
-          updatedAbilityCurrent = doc.system.strength.current;
-          updatedAbilityMax = doc.system.strength.max;
-      }
-
-      console.log("updatedAbilityCurrent", updatedAbilityCurrent);
-      console.log("updatedAbilityMax", updatedAbilityMax);
-
-      updatedAbilityCurrent++;
-      if (updatedAbilityCurrent > updatedAbilityMax) {
-        updatedAbilityCurrent = updatedAbilityMax;
-      }
-
-      console.log("updatedAbilityCurrent", updatedAbilityCurrent);
-
-      switch (fdAbility.ability) {
-        case "strength":
-          doc.update({"system.strength.current":updatedAbilityCurrent});
-          break;
-        case "agility":
-          doc.update({"system.agility.current":updatedAbilityCurrent});
-          break;
-        case "presence":
-          doc.update({"system.presence.current":updatedAbilityCurrent});
-          break;
-        case "willpower":
-          doc.update({"system.willpower.current":updatedAbilityCurrent});
-          break;
-        default:
-          doc.update({"system.strength.current":updatedAbilityCurrent});
-          break;
-      }
-    }
-    const maxHP = doc.system.hitPoints.max;
-    doc.update({"system.hitPoints.current":maxHP});
-
-    // return ui.notifications.error(game.i18n.localize("Boundless.error.non-implemented"));
+      // return ui.notifications.error(game.i18n.localize("Boundless.error.non-implemented"));
 
     } else {
       await rollCheck(rollAmount, rollBonus, targetLabel, rollLabel, fdObject.position, rollDamage, rollShortRest);
