@@ -165,11 +165,11 @@
     }
 
     .battle {
+      min-height: 150px;
       grid-column: span 2;
       background: white;
       border: 2px solid black;
       display: grid;
-      min-height: 120px;
       grid-template-columns: 2fr 1fr 1fr;
       position: relative;
 

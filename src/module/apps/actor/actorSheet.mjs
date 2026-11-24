@@ -111,6 +111,7 @@ export class BoundlessActorSheet extends api.HandlebarsApplicationMixin(sheets.A
       case "attributes":
         context.fields = await this._getFields();
         context.tab = context.tabs[partId];
+        context.recovery = this._getRecovery();
         break;
       case "items":
         context.itemTypes = this._getItemTypes();
@@ -226,6 +227,28 @@ export class BoundlessActorSheet extends api.HandlebarsApplicationMixin(sheets.A
         return [t, { label: game.i18n.localize(CONFIG.Item.typeLabels[t]) }];
       }),
     );
+  }
+
+  /* -------------------------------------------------- */
+
+  _getRecovery() {
+    // Création de la section
+    const section = `
+    <div class="recovery">
+    <h4>`+game.i18n.localize("Boundless.Recovery.label")+`</h4>
+    <div class="form-group">
+      <div class="recovery-roll"></div>
+      <a class="item-control recovery-roll" data-action="rollDice" data-roll-label="shortrest" data-roll-path="{{rollValuePath}}">
+        <i class='fas fa-circle'><label> `+game.i18n.localize("Boundless.Recovery.ShortRest")+`</label></i>
+      </a>
+      <a class="item-control recovery-roll" data-action="rollDice" data-roll-label="longrest" data-roll-path="{{rollValuePath}}">
+        <i class='fas fa-circle'><label> `+game.i18n.localize("Boundless.Recovery.LongRest")+`</label></i>
+      </a>
+    </div>
+    </div>
+    `;
+
+    return section;
   }
 
   /* -------------------------------------------------- */
