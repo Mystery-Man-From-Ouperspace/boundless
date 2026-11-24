@@ -356,23 +356,31 @@ export class BoundlessActorSheet extends api.HandlebarsApplicationMixin(sheets.A
         `<option value='${t}' ${t === "standard" ? "selected" : ""}>${game.i18n.localize(`TYPES.Position.${t}`)}</option>`,
     );
 
+    const abilities = BOUNDLESS.ABILITY_KEYS.map(
+      (t) =>
+        `<option value='${t}' ${t === "strength" ? "selected" : ""}>${game.i18n.localize(`TYPES.Ability.${t}`)}</option>`,
+    );
+
     const targetLabel = target.dataset.rollLabel;
     const rollLabelBeforeTranslation = `Boundless.Sheets.Labels.`+targetLabel+`Check`
     const rollLabel = game.i18n.localize(rollLabelBeforeTranslation);
     let fdObject = {};
+    let fdAbility = {};
     let rollBonus = 0;
-    if (target.dataset.rollLabel === "battle" || target.dataset.rollLabel === "shortrest" || target.dataset.rollLabel === "longrest") {
+    console.log("target.dataset.rollLabel", target.dataset.rollLabel);
+    if (target.dataset.rollLabel === "battle" || target.dataset.rollLabel === "shortrest") {
       fdObject = await foundry.applications.api.DialogV2.input({
         window: { title: "Boundless.Sheets.Labels.Roll" },
         content: `
           <div>
             <h1>${rollLabel}</h1>
           </div>
-          `,
+        `,
       });
       if (target.dataset.rollLabel === "battle") {
         rollBonus = this.actor.system.battle.damageBonus;
       }
+    } else if (target.dataset.rollLabel === "longrest") {
     } else {
       fdObject = await foundry.applications.api.DialogV2.input({
         window: { title: "Boundless.Sheets.Labels.Roll" },
@@ -389,7 +397,6 @@ export class BoundlessActorSheet extends api.HandlebarsApplicationMixin(sheets.A
           `,
       });
     }
-
     if (!fdObject) {
       return;
     }
@@ -418,8 +425,27 @@ export class BoundlessActorSheet extends api.HandlebarsApplicationMixin(sheets.A
       }
 
       setTimeout(update, 3000, this.actor, newHP);
+
     } else if (rollLongRest) {
-      return ui.notifications.error(game.i18n.localize("Boundless.error.non-implemented"))
+      fdAbility = await foundry.applications.api.DialogV2.input({
+        window: { title: "Boundless.Sheets.Labels.chooseAbility" },
+        content: `
+          <div>
+            <h1>${rollLabel}</h1>
+            <label>
+            ${game.i18n.localize("TYPES.Ability.label")}
+            <select name='ability'>
+            ${abilities}
+            </select>
+            </label>
+          </div>
+          `,
+      });
+    if (!fdAbility) {
+      return;
+    }
+    return ui.notifications.error(game.i18n.localize("Boundless.error.non-implemented"));
+
     } else {
       await rollCheck(rollAmount, rollBonus, targetLabel, rollLabel, fdObject.position, rollDamage, rollShortRest);
     }

@@ -461,7 +461,6 @@ class BoundlessActorSheet extends api$1.HandlebarsApplicationMixin(sheets$1.Acto
         `<option value='${t}' ${t === "strength" ? "selected" : ""}>${game.i18n.localize(`TYPES.Ability.${t}`)}</option>`,
     );
 
-
     const targetLabel = target.dataset.rollLabel;
     const rollLabelBeforeTranslation = `Boundless.Sheets.Labels.`+targetLabel+`Check`
     const rollLabel = game.i18n.localize(rollLabelBeforeTranslation);
