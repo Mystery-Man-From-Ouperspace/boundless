@@ -6,11 +6,12 @@ export default class ActorBaseBoundless extends foundry.abstract.TypeDataModel {
 
   /** @inheritdoc */
   static defineSchema() {
+    const requiredInteger = { required: true, nullable: false, integer: true }
     const { SchemaField, NumberField, HTMLField } = foundry.data.fields;
     return {
       hitPoints: new SchemaField({
-        current: new NumberField(),
-        max: new NumberField(),
+        current: new NumberField({ ...requiredInteger, initial: 0 }),
+        max: new NumberField({ ...requiredInteger, initial: 0 }),
       }),
       notes: new HTMLField({}),
     };

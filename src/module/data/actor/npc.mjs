@@ -11,9 +11,9 @@ export default class NpcBoundless extends ActorBaseBoundless {
     const { SchemaField, NumberField } = foundry.data.fields;
     const schema = {
       battle: new SchemaField({
-        armor: new NumberField(),
-        damage: new NumberField(),
-        damageBonus: new NumberField(),
+        armor: new NumberField({ ...requiredInteger, initial: 0 }),
+        damage: new NumberField({ ...requiredInteger, initial: 0 }),
+        damageBonus: new NumberField({ ...requiredInteger, initial: 0 }),
 
       }),
     };

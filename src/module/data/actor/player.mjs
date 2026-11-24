@@ -8,23 +8,24 @@ export default class PlayerBoundless extends ActorBaseBoundless {
 
   /** @inheritdoc */
   static defineSchema() {
+    const requiredInteger = { required: true, nullable: false, integer: true }
     const { NumberField, SchemaField } = foundry.data.fields;
     const schema = {
       strength: new SchemaField({
-        current: new NumberField(),
-        max: new NumberField(),
+        current: new NumberField({ ...requiredInteger, initial: 0 }),
+        max: new NumberField({ ...requiredInteger, initial: 0 }),
       }),
       presence: new SchemaField({
-        current: new NumberField(),
-        max: new NumberField(),
+        current: new NumberField({ ...requiredInteger, initial: 0 }),
+        max: new NumberField({ ...requiredInteger, initial: 0 }),
       }),
       agility: new SchemaField({
-        current: new NumberField(),
-        max: new NumberField(),
+        current: new NumberField({ ...requiredInteger, initial: 0 }),
+        max: new NumberField({ ...requiredInteger, initial: 0 }),
       }),
       willpower: new SchemaField({
-        current: new NumberField(),
-        max: new NumberField(),
+        current: new NumberField({ ...requiredInteger, initial: 0 }),
+        max: new NumberField({ ...requiredInteger, initial: 0 }),
       }),
     };
 

@@ -61,6 +61,37 @@
         }
       }
     },
+    "Item": {
+      "FIELDS": {
+        "slots": {
+          "label": "Slots"
+        },
+        "damage": {
+          "label": "Damage"
+        },
+        "damageBonus": {
+          "label": "Damage Bonus"
+        },
+        "armor": {
+          "label": "Armor"
+        },
+        "uses": {
+          "label": "Uses"
+        },
+        "used": {
+          "label": "Used"
+        },
+        "type": {
+          "label": "Type"
+        },
+        "effects": {
+          "label": "Effects"
+        },
+        "notes": {
+          "label": "Notes"
+        }
+      }
+    },
     "Sheets": {
       "Labels": {
         "ActorSheet": "Default Boundless Actor Sheet",

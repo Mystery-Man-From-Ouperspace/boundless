@@ -27,6 +27,10 @@ export class BoundlessItemSheet extends api.HandlebarsApplicationMixin(sheets.It
         {
           id: "attributes",
         },
+        {
+          id: "notes",
+        },
+
       ],
       initial: "attributes",
       labelPrefix: "Boundless.Sheets.Tabs",

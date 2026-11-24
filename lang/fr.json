@@ -61,6 +61,37 @@
         }
       }
     },
+    "Item": {
+      "FIELDS": {
+        "slots": {
+          "label": "Emplacements"
+        },
+        "damage": {
+          "label": "Dégâts"
+        },
+        "damageBonus": {
+          "label": "Bonus de dégâts"
+        },
+        "armor": {
+          "label": "Armure"
+        },
+        "uses": {
+          "label": "Utlisations"
+        },
+        "used": {
+          "label": "Utilisés"
+        },
+        "type": {
+          "label": "Type"
+        },
+        "effects": {
+          "label": "Effets"
+        },
+        "notes": {
+          "label": "Notes"
+        }
+      }
+    },
     "myFieldsLibels": {
       "battle": "",
       "armor": "Armure",
