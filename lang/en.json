@@ -100,7 +100,7 @@
       "HPRestored": "HP Restored"
     },
     "error": {
-      "non-implemented": "Error: function non-implemented"
+      "non-implemented": "Error: this function is not implemented"
     }
   },
   "TYPES": {

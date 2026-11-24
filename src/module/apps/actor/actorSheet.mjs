@@ -242,7 +242,7 @@ export class BoundlessActorSheet extends api.HandlebarsApplicationMixin(sheets.A
         <i class='fas fa-circle'><label> `+game.i18n.localize("Boundless.Recovery.ShortRest")+`</label></i>
       </a>
       <a class="item-control recovery-roll" data-action="rollDice" data-roll-label="longrest" data-roll-path="{{rollValuePath}}">
-        <i class='fas fa-circle'><label> `+game.i18n.localize("Boundless.Recovery.LongRest")+`</label></i>
+        <i class='fas fa-circle-star'><label> `+game.i18n.localize("Boundless.Recovery.LongRest")+`</label></i>
       </a>
     </div>
     </div>
