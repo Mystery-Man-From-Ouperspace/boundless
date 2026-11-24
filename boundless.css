@@ -501,7 +501,7 @@
 
     .tab.active[data-tab="items"] {
       .item-create {
-        color: black;
+        color: white;
       }
       .item-create:disabled,
       .item-create[disabled] {

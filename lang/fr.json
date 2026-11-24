@@ -111,8 +111,8 @@
       "ShortRest": "Repos court",
       "LongRest": "Repos long",
       "HPRestored": "PdC Restauré(s)",
-      "10min": "Environ 10 minutes",
-      "8h": "Environ 8 heures"
+      "10min": "10 minutes environ",
+      "8h": "8 heures environ"
 
     },
     "error": {
