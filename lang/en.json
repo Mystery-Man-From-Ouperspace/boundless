@@ -97,7 +97,9 @@
       "label": "Recovery",
       "ShortRest": "Short Rest",
       "LongRest": "Long Rest",
-      "HPRestored": "HP Restored"
+      "HPRestored": "HP Restored",
+      "10min": "About 10 minutes",
+      "8h": "About 8 hours"
     },
     "error": {
       "non-implemented": "Error: this function is not implemented"

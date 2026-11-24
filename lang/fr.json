@@ -110,7 +110,10 @@
       "label": "Récupération",
       "ShortRest": "Repos court",
       "LongRest": "Repos long",
-      "HPRestored": "PdC Restauré(s)"
+      "HPRestored": "PdC Restauré(s)",
+      "10min": "Environ 10 minutes",
+      "8h": "Environ 8 heures"
+
     },
     "error": {
       "non-implemented": "Erreur : fonction non-implémentée"

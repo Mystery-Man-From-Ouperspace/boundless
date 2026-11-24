@@ -239,10 +239,10 @@ export class BoundlessActorSheet extends api.HandlebarsApplicationMixin(sheets.A
     <div class="form-group">
       <div class="recovery-roll"></div>
       <a class="item-control recovery-roll" data-action="rollDice" data-roll-label="shortrest" data-roll-path="{{rollValuePath}}">
-        <i class='fas fa-circle'><label> `+game.i18n.localize("Boundless.Recovery.ShortRest")+`</label></i>
+        <i class='fas fa-circle' data-tooltip="`+game.i18n.localize('Boundless.Recovery.10min')+`"><label> `+game.i18n.localize("Boundless.Recovery.ShortRest")+`</label></i>
       </a>
       <a class="item-control recovery-roll" data-action="rollDice" data-roll-label="longrest" data-roll-path="{{rollValuePath}}">
-        <i class='fas fa-circle-star'><label> `+game.i18n.localize("Boundless.Recovery.LongRest")+`</label></i>
+        <i class='fas fa-circle-star'data-tooltip="`+game.i18n.localize('Boundless.Recovery.8h')+`"><label> `+game.i18n.localize("Boundless.Recovery.LongRest")+`</label></i>
       </a>
     </div>
     </div>
