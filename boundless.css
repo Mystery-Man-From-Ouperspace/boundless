@@ -165,7 +165,7 @@
     }
 
     .battle {
-      min-height: 150px;
+      min-height: 130px;
       grid-column: span 2;
       background: white;
       border: 2px solid black;

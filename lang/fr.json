@@ -3,7 +3,7 @@
     "Actor": {
       "FIELDS": {
         "battle": {
-          "label": "Combat",
+          "label": "",
           "armor": {
             "label": "Armure"
           },
