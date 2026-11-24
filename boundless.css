@@ -222,11 +222,11 @@
 
       .form-group {
         display: flex;
-        /* flex-direction: column-reverse; */
+        flex-direction: row;
         gap: 0;
 
         .recovery-roll {
-          display: flex;
+          flex-direction: row;
           /*
           position: absolute;
           top: 65%;
