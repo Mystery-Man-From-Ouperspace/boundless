@@ -239,7 +239,7 @@ export class BoundlessActorSheet extends api.HandlebarsApplicationMixin(sheets.A
     <div class="form-group">
       <div class="recovery-roll"></div>
       <a class="item-control recovery-roll" data-action="rollDice" data-roll-label="shortrest" data-roll-path="{{rollValuePath}}">
-        <i class='fas fa-chair' data-tooltip="`+game.i18n.localize('Boundless.Recovery.10min')+`"><label> `+game.i18n.localize("Boundless.Recovery.ShortRest")+`</label></i>
+        <i class='fas fa-seat' data-tooltip="`+game.i18n.localize('Boundless.Recovery.10min')+`"><label> `+game.i18n.localize("Boundless.Recovery.ShortRest")+`</label></i>
       </a>
       <a class="item-control recovery-roll" data-action="rollDice" data-roll-label="longrest" data-roll-path="{{rollValuePath}}">
         <i class='fas fa-bed' data-tooltip="`+game.i18n.localize('Boundless.Recovery.8h')+`"><label> `+game.i18n.localize("Boundless.Recovery.LongRest")+`</label></i>
@@ -361,7 +361,7 @@ export class BoundlessActorSheet extends api.HandlebarsApplicationMixin(sheets.A
     const rollLabel = game.i18n.localize(rollLabelBeforeTranslation);
     let fdObject = {};
     let rollBonus = 0;
-    if (target.dataset.rollLabel === "battle" || target.dataset.rollLabel === "shortrest") {
+    if (target.dataset.rollLabel === "battle" || target.dataset.rollLabel === "shortrest" || target.dataset.rollLabel === "longrest") {
       fdObject = await foundry.applications.api.DialogV2.input({
         window: { title: "Boundless.Sheets.Labels.Roll" },
         content: `
@@ -373,7 +373,6 @@ export class BoundlessActorSheet extends api.HandlebarsApplicationMixin(sheets.A
       if (target.dataset.rollLabel === "battle") {
         rollBonus = this.actor.system.battle.damageBonus;
       }
-    } else if (target.dataset.rollLabel === "longrest") {
     } else {
       fdObject = await foundry.applications.api.DialogV2.input({
         window: { title: "Boundless.Sheets.Labels.Roll" },

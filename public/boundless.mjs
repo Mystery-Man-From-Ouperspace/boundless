@@ -350,7 +350,7 @@ class BoundlessActorSheet extends api$1.HandlebarsApplicationMixin(sheets$1.Acto
     <div class="form-group">
       <div class="recovery-roll"></div>
       <a class="item-control recovery-roll" data-action="rollDice" data-roll-label="shortrest" data-roll-path="{{rollValuePath}}">
-        <i class='fas fa-chair' data-tooltip="`+game.i18n.localize('Boundless.Recovery.10min')+`"><label> `+game.i18n.localize("Boundless.Recovery.ShortRest")+`</label></i>
+        <i class='fas fa-seat' data-tooltip="`+game.i18n.localize('Boundless.Recovery.10min')+`"><label> `+game.i18n.localize("Boundless.Recovery.ShortRest")+`</label></i>
       </a>
       <a class="item-control recovery-roll" data-action="rollDice" data-roll-label="longrest" data-roll-path="{{rollValuePath}}">
         <i class='fas fa-bed' data-tooltip="`+game.i18n.localize('Boundless.Recovery.8h')+`"><label> `+game.i18n.localize("Boundless.Recovery.LongRest")+`</label></i>
@@ -456,10 +456,17 @@ class BoundlessActorSheet extends api$1.HandlebarsApplicationMixin(sheets$1.Acto
         `<option value='${t}' ${t === "standard" ? "selected" : ""}>${game.i18n.localize(`TYPES.Position.${t}`)}</option>`,
     );
 
+    const abilities = BOUNDLESS.ABILITY_KEYS.map(
+      (t) =>
+        `<option value='${t}' ${t === "strength" ? "selected" : ""}>${game.i18n.localize(`TYPES.Ability.${t}`)}</option>`,
+    );
+
+
     const targetLabel = target.dataset.rollLabel;
     const rollLabelBeforeTranslation = `Boundless.Sheets.Labels.`+targetLabel+`Check`
     const rollLabel = game.i18n.localize(rollLabelBeforeTranslation);
     let fdObject = {};
+    let fdAbility = {};
     let rollBonus = 0;
     console.log("target.dataset.rollLabel", target.dataset.rollLabel);
     if (target.dataset.rollLabel === "battle" || target.dataset.rollLabel === "shortrest") {
@@ -469,7 +476,7 @@ class BoundlessActorSheet extends api$1.HandlebarsApplicationMixin(sheets$1.Acto
           <div>
             <h1>${rollLabel}</h1>
           </div>
-          `,
+        `,
       });
       if (target.dataset.rollLabel === "battle") {
         rollBonus = this.actor.system.battle.damageBonus;
@@ -521,8 +528,24 @@ class BoundlessActorSheet extends api$1.HandlebarsApplicationMixin(sheets$1.Acto
       setTimeout(update, 3000, this.actor, newHP);
 
     } else if (rollLongRest) {
-
-        return ui.notifications.error(game.i18n.localize("Boundless.error.non-implemented"));
+      fdAbility = await foundry.applications.api.DialogV2.input({
+        window: { title: "Boundless.Sheets.Labels.chooseAbility" },
+        content: `
+          <div>
+            <h1>${rollLabel}</h1>
+            <label>
+            ${game.i18n.localize("TYPES.Ability.label")}
+            <select name='ability'>
+            ${abilities}
+            </select>
+            </label>
+          </div>
+          `,
+      });
+    if (!fdAbility) {
+      return;
+    }
+    return ui.notifications.error(game.i18n.localize("Boundless.error.non-implemented"));
 
     } else {
       await rollCheck(rollAmount, rollBonus, targetLabel, rollLabel, fdObject.position, rollDamage, rollShortRest);

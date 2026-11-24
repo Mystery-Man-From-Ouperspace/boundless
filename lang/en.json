@@ -73,7 +73,8 @@
         "willpowerCheck": "Willpower Check",
         "battleCheck": "Damage Roll",
         "shortrestCheck": "Short Rest Roll",
-        "longrestCheck": "Long Rest Roll"
+        "longrestCheck": "Long Rest Recovery",
+        "chooseAbility": "Choose an Attribute"
       },
       "Tabs": {
         "attributes": "Attributes",
@@ -124,6 +125,13 @@
       "standard": "Standard",
       "bad": "Bad",
       "impossible": "Impossible"
+    },
+    "Ability": {
+      "label": "Choose to which one Attribute score add 1",
+      "strength": "Strength",
+      "presence": "Presence",
+      "agility": "Agility",
+      "willpower": "Willpower"
     }
   }
 }

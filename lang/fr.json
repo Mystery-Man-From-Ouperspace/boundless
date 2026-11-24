@@ -86,7 +86,8 @@
         "willpowerCheck": "Test de Volonté",
         "battleCheck": "Jet de dégâts",
         "shortrestCheck": "Jet de repos court",
-        "longrestCheck": "Jet de repos long"
+        "longrestCheck": "Récupération de repos long",
+        "chooseAbility": "Choisissez un Attribut"
       },
       "Tabs": {
         "attributes": "Attributs",
@@ -138,6 +139,13 @@
       "standard": "Standard",
       "bad": "Mauvaise",
       "impossible": "Impossible"
+    },
+    "Ability": {
+      "label": "À quel Attribut souhaitez-vous ajouter 1 ?",
+      "strength": "Force",
+      "presence": "Présence",
+      "agility": "Agilité",
+      "willpower": "Volonté"
     }
   }
 }
