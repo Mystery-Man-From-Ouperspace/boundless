@@ -456,6 +456,12 @@
             color: white;
           }
         }
+
+        .attribute-roll {
+          .fas {
+            color: white;
+          }
+        }
       }
 
       .recovery {
