@@ -413,7 +413,12 @@ export class BoundlessActorSheet extends api.HandlebarsApplicationMixin(sheets.A
       if (newHP > maxHP) {
         newHP = maxHP;
       }
-      this.actor.update({"system.hitPoints.current":newHP});
+
+      function update(actor, newHP) {
+        actor.update({"system.hitPoints.current":newHP});
+      }
+
+      setTimeout(update, 3000, this.actor, newHP);
     } else if (rollLongRest) {
       return ui.notifications.error(game.i18n.localize("Boundless.error.non-implemented"))
     } else {
