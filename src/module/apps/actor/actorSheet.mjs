@@ -164,10 +164,10 @@ export class BoundlessActorSheet extends api.HandlebarsApplicationMixin(sheets.A
     fieldSets = await this._addField(systemFields["agility"], source, fieldSets, "current");
     fieldSets = await this._addField(systemFields["willpower"], source, fieldSets, "current");
     }
-    fieldSets = await this._addField(systemFields["hitPoints"], source, fieldSets, null);
     if (doc.type === "npc") {
     fieldSets = await this._addField(systemFields["battle"], source, fieldSets, "damage");
     }
+    fieldSets = await this._addField(systemFields["hitPoints"], source, fieldSets, null);
 
     return fieldSets;
   }
