@@ -368,7 +368,7 @@ export class BoundlessActorSheet extends api.HandlebarsApplicationMixin(sheets.A
     let fdAbility = {};
     let rollBonus = 0;
     console.log("target.dataset.rollLabel", target.dataset.rollLabel);
-    if (target.dataset.rollLabel === "battle" || target.dataset.rollLabel === "shortrest") {
+    if (target.dataset.rollLabel === "battle" || target.dataset.rollLabel === "shortrest" || (target.dataset.rollLabel === "longrest" && this.actor.type != "player")) {
       fdObject = await foundry.applications.api.DialogV2.input({
         window: { title: "Boundless.Sheets.Labels.Roll" },
         content: `
@@ -380,7 +380,7 @@ export class BoundlessActorSheet extends api.HandlebarsApplicationMixin(sheets.A
       if (target.dataset.rollLabel === "battle") {
         rollBonus = this.actor.system.battle.damageBonus;
       }
-    } else if (target.dataset.rollLabel === "longrest") {
+    } else if (target.dataset.rollLabel === "longrest" && this.actor.type === "player") {
     } else {
       fdObject = await foundry.applications.api.DialogV2.input({
         window: { title: "Boundless.Sheets.Labels.Roll" },
@@ -446,7 +446,6 @@ export class BoundlessActorSheet extends api.HandlebarsApplicationMixin(sheets.A
           return;
         }
 
-        console.log("fdAbility.ability", fdAbility.ability);
         let updatedAbilityCurrent;
         let abilityMax;
 
@@ -472,15 +471,10 @@ export class BoundlessActorSheet extends api.HandlebarsApplicationMixin(sheets.A
             abilityMax = doc.system.strength.max;
         }
 
-        console.log("updatedAbilityCurrent", updatedAbilityCurrent);
-        console.log("abilityMax", abilityMax);
-
         updatedAbilityCurrent++;
         if (updatedAbilityCurrent > abilityMax) {
           updatedAbilityCurrent = abilityMax;
         }
-
-        console.log("updatedAbilityCurrent", updatedAbilityCurrent);
 
         switch (fdAbility.ability) {
           case "strength":

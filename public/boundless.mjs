@@ -468,7 +468,7 @@ class BoundlessActorSheet extends api$1.HandlebarsApplicationMixin(sheets$1.Acto
     let fdAbility = {};
     let rollBonus = 0;
     console.log("target.dataset.rollLabel", target.dataset.rollLabel);
-    if (target.dataset.rollLabel === "battle" || target.dataset.rollLabel === "shortrest") {
+    if (target.dataset.rollLabel === "battle" || target.dataset.rollLabel === "shortrest" || (target.dataset.rollLabel === "longrest" && this.actor.type != "player")) {
       fdObject = await foundry.applications.api.DialogV2.input({
         window: { title: "Boundless.Sheets.Labels.Roll" },
         content: `
@@ -480,7 +480,7 @@ class BoundlessActorSheet extends api$1.HandlebarsApplicationMixin(sheets$1.Acto
       if (target.dataset.rollLabel === "battle") {
         rollBonus = this.actor.system.battle.damageBonus;
       }
-    } else if (target.dataset.rollLabel === "longrest") {
+    } else if (target.dataset.rollLabel === "longrest" && this.actor.type === "player") {
     } else {
       fdObject = await foundry.applications.api.DialogV2.input({
         window: { title: "Boundless.Sheets.Labels.Roll" },
