@@ -448,36 +448,36 @@ export class BoundlessActorSheet extends api.HandlebarsApplicationMixin(sheets.A
 
         console.log("fdAbility.ability", fdAbility.ability);
         let updatedAbilityCurrent;
-        let updatedAbilityMax;
+        let abilityMax;
 
         switch (fdAbility.ability) {
           case "strength":
             updatedAbilityCurrent = doc.system.strength.current;
-            updatedAbilityMax = doc.system.strength.max;
+            abilityMax = doc.system.strength.max;
             break;
           case "agility":
             updatedAbilityCurrent = doc.system.agility.current;
-            updatedAbilityMax = doc.system.agility.max;
+            abilityMax = doc.system.agility.max;
             break;
           case "presence":
             updatedAbilityCurrent = doc.system.presence.current;
-            updatedAbilityMax = doc.system.presence.max;
+            abilityMax = doc.system.presence.max;
             break;
           case "willpower":
             updatedAbilityCurrent = doc.system.willpower.current;
-            updatedAbilityMax = doc.system.willpower.max;
+            abilityMax = doc.system.willpower.max;
             break;
           default:
             updatedAbilityCurrent = doc.system.strength.current;
-            updatedAbilityMax = doc.system.strength.max;
+            abilityMax = doc.system.strength.max;
         }
 
         console.log("updatedAbilityCurrent", updatedAbilityCurrent);
-        console.log("updatedAbilityMax", updatedAbilityMax);
+        console.log("abilityMax", abilityMax);
 
         updatedAbilityCurrent++;
-        if (updatedAbilityCurrent > updatedAbilityMax) {
-          updatedAbilityCurrent = updatedAbilityMax;
+        if (updatedAbilityCurrent > abilityMax) {
+          updatedAbilityCurrent = abilityMax;
         }
 
         console.log("updatedAbilityCurrent", updatedAbilityCurrent);
