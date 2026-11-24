@@ -163,6 +163,7 @@
         }
       }
     }
+
     .battle {
       grid-column: span 2;
       background: white;
@@ -201,21 +202,52 @@
           font-size: 1.5rem;
         }
       }
+    }
 
-      .attribute-roll {
+    .recovery {
+      min-height: 110px;
+      grid-column: span 2 / span 2;
+      background: white;
+      border: 2px solid black;
+      display: grid;
+      grid-template-columns: 2fr 2fr;
+      position: relative;
+
+      h4 {
+        color: black;
         position: absolute;
-        top: 65%;
+        right: 1rem;
         bottom: 0;
-        left: 45%;
-        right: 45%;
-        .fas {
-          font-size: 35px;
-          color: black;
-        }
       }
 
-      .attribute-roll:hover {
-        filter: drop-shadow(0 0 7px #f20000);
+      .form-group {
+        display: flex;
+        /* flex-direction: column-reverse; */
+        gap: 0;
+
+        .recovery-roll {
+          display: flex;
+          /*
+          position: absolute;
+          top: 65%;
+          bottom: 0;
+          left: 45%;
+          right: 45%;
+          */
+          .fas {
+            font-size: 35px;
+            color: black;
+            label {
+              font-size: 12px;
+              color: black;
+              max-height: min-content;
+            }
+          }
+        }
+
+        .recovery-roll:hover {
+          filter: drop-shadow(0 0 7px #f20000);
+        }
       }
     }
   }
@@ -318,7 +350,6 @@
   .application.sheet.boundless {
     &.actor,
     &.item {
-      gap: 0;
       .window-content {
         background: #383838;
       }
@@ -393,6 +424,19 @@
           }
         }
       }
+
+      .attribute-roll {
+        position: absolute;
+        top: 65%;
+        bottom: 0;
+        left: 45%;
+        right: 45%;
+        .fas {
+          font-size: 35px;
+          color: black;
+        }
+      }
+
       .battle {
         background: black;
         border: 2px solid white;
@@ -412,10 +456,25 @@
             color: white;
           }
         }
+      }
 
-        .attribute-roll {
-          .fas {
-            color: white;
+      .recovery {
+        background: black;
+        border: 2px solid white;
+
+        h4 {
+          color: white;
+        }
+
+        .form-group {
+          .recovery-roll {
+            .fas {
+              color: white;
+              label {
+                color: white;
+                max-height: min-content;
+              }
+            }
           }
         }
       }

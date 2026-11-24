@@ -5,7 +5,7 @@ import { systemPath } from "../../constants.mjs";
 /**
  * Roll a check and add a ChatMessage with the result.
  */
-export async function rollCheck(rollAmount, rollBonus, targetLabel, rollLabel, position, rollDamage) {
+export async function rollCheck(rollAmount, rollBonus, targetLabel, rollLabel, position, rollDamage, rollShortRest) {
   const speaker = foundry.documents.ChatMessage.getSpeaker();
   const roll = new foundry.dice.Roll(`${rollAmount}d6`);
   await roll.evaluate();
@@ -41,6 +41,7 @@ export async function rollCheck(rollAmount, rollBonus, targetLabel, rollLabel, p
   }
 
   const rollDamageWBonus = parseInt(roll.result)+parseInt(rollBonus);
+  const rollShortRestTotal = parseInt(roll.result)
   let formula = `${rollAmount}D`;
   if (rollDamage) {formula += `+${rollBonus}`};
   const renderedTemplate = await foundry.applications.handlebars.renderTemplate(
@@ -48,6 +49,8 @@ export async function rollCheck(rollAmount, rollBonus, targetLabel, rollLabel, p
     {
       rollDamage: rollDamage,
       rollDamageWBonus: rollDamageWBonus,
+      rollShortRest: rollShortRest,
+      rollShortRestTotal: rollShortRestTotal,
       maxSuccesses: successCount > 1,
       success: successCount > 0,
       rollLabel: rollLabel,
@@ -65,4 +68,8 @@ export async function rollCheck(rollAmount, rollBonus, targetLabel, rollLabel, p
   };
 
   foundry.documents.ChatMessage.create(messageData);
+
+  if (rollShortRest) {
+    return rollShortRestTotal;
+  }
 }

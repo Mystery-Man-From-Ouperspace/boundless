@@ -84,7 +84,9 @@
         "agilityCheck": "Test d'Agilité",
         "strengthCheck": "Test de Force",
         "willpowerCheck": "Test de Volonté",
-        "battleCheck": "Jet de dégâts"
+        "battleCheck": "Jet de dégâts",
+        "shortrestCheck": "Jet de repos court",
+        "longrestCheck": "Jet de repos long"
       },
       "Tabs": {
         "attributes": "Attributs",
@@ -103,6 +105,15 @@
           }
         }
       }
+    },
+    "Recovery": {
+      "label": "Récupération",
+      "ShortRest": "Repos court",
+      "LongRest": "Repos long",
+      "HPRestored": "PdC Restauré(s)"
+    },
+    "error": {
+      "non-implemented": "Error: function non-implemented"
     }
   },
   "TYPES": {

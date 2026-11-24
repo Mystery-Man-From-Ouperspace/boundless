@@ -25,7 +25,7 @@ const systemPath = (path) => `systems/${systemID}/${path}`;
 /**
  * Roll a check and add a ChatMessage with the result.
  */
-async function rollCheck(rollAmount, rollBonus, targetLabel, rollLabel, position, rollDamage) {
+async function rollCheck(rollAmount, rollBonus, targetLabel, rollLabel, position, rollDamage, rollShortRest) {
   const speaker = foundry.documents.ChatMessage.getSpeaker();
   const roll = new foundry.dice.Roll(`${rollAmount}d6`);
   await roll.evaluate();
@@ -61,6 +61,7 @@ async function rollCheck(rollAmount, rollBonus, targetLabel, rollLabel, position
   }
 
   const rollDamageWBonus = parseInt(roll.result)+parseInt(rollBonus);
+  const rollShortRestTotal = parseInt(roll.result)
   let formula = `${rollAmount}D`;
   if (rollDamage) {formula += `+${rollBonus}`};
   const renderedTemplate = await foundry.applications.handlebars.renderTemplate(
@@ -68,6 +69,8 @@ async function rollCheck(rollAmount, rollBonus, targetLabel, rollLabel, position
     {
       rollDamage: rollDamage,
       rollDamageWBonus: rollDamageWBonus,
+      rollShortRest: rollShortRest,
+      rollShortRestTotal: rollShortRestTotal,
       maxSuccesses: successCount > 1,
       success: successCount > 0,
       rollLabel: rollLabel,
@@ -85,6 +88,10 @@ async function rollCheck(rollAmount, rollBonus, targetLabel, rollLabel, position
   };
 
   foundry.documents.ChatMessage.create(messageData);
+
+  if (rollShortRest) {
+    return rollShortRestTotal;
+  }
 }
 
 const { api: api$1, sheets: sheets$1 } = foundry.applications;
@@ -211,6 +218,9 @@ class BoundlessActorSheet extends api$1.HandlebarsApplicationMixin(sheets$1.Acto
         context.tab = context.tabs[partId];
         break;
     }
+
+    // context.player = await (this.type === "player");
+
     return context;
   }
 
@@ -429,7 +439,7 @@ class BoundlessActorSheet extends api$1.HandlebarsApplicationMixin(sheets$1.Acto
     let fdObject = {};
     let rollBonus = 0;
     console.log("target.dataset.rollLabel", target.dataset.rollLabel);
-    if (target.dataset.rollLabel === "battle") {
+    if (target.dataset.rollLabel === "battle" || target.dataset.rollLabel === "shortrest") {
       fdObject = await foundry.applications.api.DialogV2.input({
         window: { title: "Boundless.Sheets.Labels.Roll" },
         content: `
@@ -438,8 +448,10 @@ class BoundlessActorSheet extends api$1.HandlebarsApplicationMixin(sheets$1.Acto
           </div>
           `,
       });
-      // rollBonus = await _getBattle().damageBonus;
-      rollBonus = this.actor.system.battle.damageBonus;
+      if (target.dataset.rollLabel === "battle") {
+        rollBonus = this.actor.system.battle.damageBonus;
+      }
+    } else if (target.dataset.rollLabel === "longrest") {
     } else {
       fdObject = await foundry.applications.api.DialogV2.input({
         window: { title: "Boundless.Sheets.Labels.Roll" },
@@ -464,11 +476,27 @@ class BoundlessActorSheet extends api$1.HandlebarsApplicationMixin(sheets$1.Acto
     const source = doc._source;
     const rollAmount = foundry.utils.getProperty(source, target.dataset.rollPath);
 
-    const rollDamage = (target.dataset.rollLabel === "battle");
+    const rollDamage = await (target.dataset.rollLabel === "battle");
+    const rollShortRest = await (target.dataset.rollLabel === "shortrest");
+    const rollLongRest = await (target.dataset.rollLabel === "longrest");
+
     if (rollDamage) {
-      await rollCheck(rollAmount, rollBonus, targetLabel, rollLabel, "standard", rollDamage);
+      await rollCheck(rollAmount, rollBonus, targetLabel, rollLabel, "standard", rollDamage, rollShortRest);
+    } else if (rollShortRest) {
+      const rollShortRestTotal = await rollCheck(1, rollBonus, targetLabel, rollLabel, "standard", rollDamage, rollShortRest);
+      const currentHP = this.actor.system.hitPoints.current;
+      const maxHP = this.actor.system.hitPoints.max;
+      let newHP = currentHP + rollShortRestTotal;
+      if (newHP > maxHP) {
+        newHP = maxHP;
+      }
+      this.actor.update({"system.hitPoints.current":newHP});
+    } else if (rollLongRest) {
+
+        return ui.notifications.error(game.i18n.localize("Boundless.error.non-implemented"));
+
     } else {
-      await rollCheck(rollAmount, rollBonus, targetLabel, rollLabel, fdObject.position, rollDamage);
+      await rollCheck(rollAmount, rollBonus, targetLabel, rollLabel, fdObject.position, rollDamage, rollShortRest);
     }
   }
 
@@ -562,6 +590,8 @@ class BoundlessActorSheet extends api$1.HandlebarsApplicationMixin(sheets$1.Acto
     }
   }
 }
+
+
 
 const { api, sheets } = foundry.applications;
 

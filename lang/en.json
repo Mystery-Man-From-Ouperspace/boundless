@@ -71,7 +71,9 @@
         "agilityCheck": "Agility Check",
         "strengthCheck": "Strength Check",
         "willpowerCheck": "Willpower Check",
-        "battleCheck": "Damage Roll"
+        "battleCheck": "Damage Roll",
+        "shortrestCheck": "Short Rest Roll",
+        "longrestCheck": "Long Rest Roll"
       },
       "Tabs": {
         "attributes": "Attributes",
@@ -90,6 +92,15 @@
           }
         }
       }
+    },
+    "Recovery": {
+      "label": "Recovery",
+      "ShortRest": "Short Rest",
+      "LongRest": "Long Rest",
+      "HPRestored": "HP Restored"
+    },
+    "error": {
+      "non-implemented": "Error: function non-implemented"
     }
   },
   "TYPES": {
