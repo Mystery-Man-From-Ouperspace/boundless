@@ -208,8 +208,8 @@
         position: absolute;
         top: 65%;
         bottom: 0;
-        left: 45%;
-        right: 45%;
+        margin-left: 25%;
+        margin-right: 65%;
         .fas {
           font-size: 35px;
           color: black;
