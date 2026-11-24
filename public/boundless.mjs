@@ -505,9 +505,9 @@ class BoundlessActorSheet extends api$1.HandlebarsApplicationMixin(sheets$1.Acto
     const source = doc._source;
     const rollAmount = foundry.utils.getProperty(source, target.dataset.rollPath);
 
-    const rollDamage = await (target.dataset.rollLabel === "battle");
-    const rollShortRest = await (target.dataset.rollLabel === "shortrest");
-    const rollLongRest = await (target.dataset.rollLabel === "longrest");
+    const rollDamage = (target.dataset.rollLabel === "battle");
+    const rollShortRest = (target.dataset.rollLabel === "shortrest");
+    const rollLongRest = (target.dataset.rollLabel === "longrest");
 
     if (rollDamage) {
       await rollCheck(rollAmount, rollBonus, targetLabel, rollLabel, "standard", rollDamage, rollShortRest);
