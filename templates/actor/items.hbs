@@ -15,19 +15,19 @@ ESS.FIELDS.ite{{! Items Tab }}
       <img src="{{item.img}}" alt="<b>{{item.name}}</b>" width="24" height="24">
 
       {{#if (eq item.type "armor")}}
-        <div class="item-name"><b>{{item.name}}</b> / {{localize 'Boundless.Item.FIELDS.slots.label'}} {{item.system.slots}} / {{localize 'Boundless.Item.FIELDS.armor.label'}} {{item.system.armor}} / {{localize 'Boundless.Item.FIELDS.uses.label'}} {{item.system.uses}} / {{localize 'Boundless.Item.FIELDS.remainingUses.label'}} {{item.system.remainingUses}}</div>
+        <div class="item-name"><b>{{item.name}}</b> / {{item.system.slots}} {{localize 'Boundless.Item.FIELDS.slots.label'}} / {{localize 'Boundless.Item.FIELDS.armor.label'}} {{item.system.armor}} / {{localize 'Boundless.Item.FIELDS.uses.label'}} {{item.system.uses}} / {{localize 'Boundless.Item.FIELDS.remainingUses.label'}} {{item.system.remainingUses}}</div>
       {{/if}}
       {{#if (eq item.type "weapon")}}
-        <div class="item-name"><b>{{item.name}}</b> / {{localize 'Boundless.Item.FIELDS.slots.label'}} {{item.system.slots}} / {{localize 'Boundless.Item.FIELDS.damage.label'}} {{item.system.damage}} / {{localize 'Boundless.Item.FIELDS.damageBonus.label'}} {{item.system.damageBonus}} / {{localize 'Boundless.Item.FIELDS.uses.label'}} {{item.system.uses}} / {{localize 'Boundless.Item.FIELDS.remainingUses.label'}} {{item.system.remainingUses}}</div>
+        <div class="item-name"><b>{{item.name}}</b> / {{item.system.slots}} {{localize 'Boundless.Item.FIELDS.slots.label'}} / {{localize 'Boundless.Item.FIELDS.damage.label'}} {{item.system.damage}} / {{localize 'Boundless.Item.FIELDS.damageBonus.label'}} {{item.system.damageBonus}} / {{localize 'Boundless.Item.FIELDS.uses.label'}} {{item.system.uses}} / {{localize 'Boundless.Item.FIELDS.remainingUses.label'}} {{item.system.remainingUses}}</div>
       {{/if}}
       {{#if (eq item.type "basic")}}
-        <div class="item-name"><b>{{item.name}}</b> / {{localize 'Boundless.Item.FIELDS.slots.label'}} {{item.system.slots}} / {{localize 'Boundless.Item.FIELDS.uses.label'}} {{item.system.uses}} / {{localize 'Boundless.Item.FIELDS.remainingUses.label'}} {{item.system.remainingUses}}</div>
+        <div class="item-name"><b>{{item.name}}</b> / {{item.system.slots}} {{localize 'Boundless.Item.FIELDS.slots.label'}} / {{localize 'Boundless.Item.FIELDS.uses.label'}} {{item.system.uses}} / {{localize 'Boundless.Item.FIELDS.remainingUses.label'}} {{item.system.remainingUses}}</div>
       {{/if}}
       {{#if (eq item.type "spell")}}
-        <div class="item-name"><b>{{item.name}}</b> / {{localize 'Boundless.Item.FIELDS.slots.label'}} {{item.system.slots}} / {{localize 'Boundless.Item.FIELDS.type.label'}}: {{item.system.type}}</div>
+        <div class="item-name"><b>{{item.name}}</b> / {{item.system.slots}} {{localize 'Boundless.Item.FIELDS.slots.label'}} / {{localize 'Boundless.Item.FIELDS.type.label'}}: {{item.system.type}}</div>
       {{/if}}
       {{#if (eq item.type "condition")}}
-        <div class="item-name"><b>{{item.name}}</b> / {{localize 'Boundless.Item.FIELDS.slots.label'}} {{item.system.slots}} / {{localize 'Boundless.Item.FIELDS.type.label'}}: {{item.system.type}}</div>
+        <div class="item-name"><b>{{item.name}}</b> / {{item.system.slots}} {{localize 'Boundless.Item.FIELDS.slots.label'}} / {{localize 'Boundless.Item.FIELDS.type.label'}}: {{item.system.type}}</div>
       {{/if}}
 
       <div class="document-controls">
