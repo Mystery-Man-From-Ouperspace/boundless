@@ -62,6 +62,13 @@
     "distance": 5,
     "units": "ft"
   },
+    "media": [
+      {
+          "type": "setup",
+          "url": "systems/boundless/assets/scene_poster.png",
+          "thumbnail": "systems/boundless/assets/scene_poster.png"
+      }
+  ],
   "initiative": "1d6",
   "primaryTokenAttribute": "current",
   "secondaryTokenAttribute": "",
