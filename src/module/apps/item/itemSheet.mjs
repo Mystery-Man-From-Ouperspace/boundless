@@ -118,7 +118,8 @@ export class BoundlessItemSheet extends api.HandlebarsApplicationMixin(sheets.It
   async _getNotes() {
     const doc = this.item;
     const source = doc._source;
-    const systemFields = CONFIG.Item.dataModels[doc.type]?.schema.fields;
+    // const systemFields = CONFIG.Item.dataModels[doc.type]?.schema.fields;
+    const systemFields = CONFIG.Item.dataModels.item.schema.fields;
 
     let fieldSets = [];
     fieldSets = await this.#addSystemFields(systemFields["notes"], source, fieldSets, null);
@@ -132,9 +133,11 @@ export class BoundlessItemSheet extends api.HandlebarsApplicationMixin(sheets.It
    * Handles the system fields for the form-fields generic.
    */
   async _getFields() {
+    /*
     const doc = this.item;
     const source = doc._source;
-    const systemFields = CONFIG.Item.dataModels[doc.type]?.schema.fields;
+    const systemFields = CONFIG.Item.dataModels.item.schema.fields;
+    console.log("systemFields", systemFields);
     const fieldSets = [];
     // TODO: Find a clever way to handle enrichment
     for (const field of Object.values(systemFields ?? {})) {
@@ -153,6 +156,68 @@ export class BoundlessItemSheet extends api.HandlebarsApplicationMixin(sheets.It
         fieldSets.push({ outer: { field, value: foundry.utils.getProperty(source, path) } });
       }
     }
+    console.log("fieldSets", fieldSets);
+    return fieldSets;
+  */
+
+    const doc = this.item;
+    const source = doc._source;
+    console.log("source", source);
+    const systemFields = CONFIG.Actor.dataModels.item.schema.fields;
+
+    let fieldSets = [];
+
+    if (doc.type != "spell" && doc.type != "condition") {
+      fieldSets = await this._addField(systemFields["equipped"], source, fieldSets, null);
+    }
+    fieldSets = await this._addField(systemFields["slots"], source, fieldSets, null);
+    if (doc.type === "weapon") {
+      fieldSets = await this._addField(systemFields["damage"], source, fieldSets, null);
+      fieldSets = await this._addField(systemFields["damageBonus"], source, fieldSets, null);
+    }
+    if (doc.type === "armor") {
+      fieldSets = await this._addField(systemFields["armor"], source, fieldSetss, null);
+    }
+    if (doc.type != "spell" && doc.type != "condition") {
+      fieldSets = await this._addField(systemFields["uses"], source, fieldSetss, null);
+      fieldSets = await this._addField(systemFields["remainingUses"], source, fieldSetss, null);
+    }
+    if (doc.type === "spell" || doc.type === "condition") {
+      fieldSets = await this._addField(systemFields["type"], source, fieldSetss, null);
+    }
+    if (doc.type === "spell") {
+      fieldSets = await this._addField(systemFields["effects"], source, fieldSetss, null);
+    }
+    return fieldSets;
+  }
+
+  /* -------------------------------------------------- */
+
+  /**
+   * Add system model fields to the fieldset.
+   */
+  async _addField(field, source, fieldSets, rollValuePath) {
+    await console.log("rollValuePath", rollValuePath);
+    const path = `system.${field.name}`;
+    if (field instanceof foundry.data.fields.SchemaField) {
+      console.log("field", field);
+      const legend = game.i18n.localize(field.label);
+
+      const fieldset = {
+        fieldset: true,
+        label: field.name,
+        legend: legend,
+        className: field.name.toLowerCase(),
+        canRoll: !!rollValuePath,
+        rollValuePath: rollValuePath ? `${path}.${rollValuePath}` : "",
+        fields: [],
+      };
+      await this.#addSystemFields(fieldset, field.fields, source, path);
+      fieldSets.push(fieldset);
+    } else {
+      fieldSets.push({ outer: { field, value: foundry.utils.getProperty(source, path) } });
+    }
+
     return fieldSets;
   }
 

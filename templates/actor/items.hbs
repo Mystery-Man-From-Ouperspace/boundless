@@ -1,4 +1,4 @@
-{{! Items Tab }}
+ESS.FIELDS.ite{{! Items Tab }}
 <section class="tab scrollable {{tab.cssClass}}" data-group="primary" data-tab="items">
   {{#if canAdd}}
   <a class="item-control item-create" data-action="addItem">
@@ -12,8 +12,24 @@
   <ul class="items">
     {{#each items as |item|}}
     <li class="item flexrow draggable" data-item-id="{{item._id}}" data-document-class="Item">
-      <img src="{{item.img}}" alt="{{item.name}}" width="24" height="24">
-      <div class="item-name">{{item.name}}</div>
+      <img src="{{item.img}}" alt="<b>{{item.name}}</b>" width="24" height="24">
+
+      {{#if (eq item.type "armor")}}
+        <div class="item-name"><b>{{item.name}}</b> / {{localize 'Boundless.Item.FIELDS.slots.label'}} {{item.system.slots}} / {{localize 'Boundless.Item.FIELDS.armor.label'}} {{item.system.armor}} / {{localize 'Boundless.Item.FIELDS.uses.label'}} {{item.system.uses}} / {{localize 'Boundless.Item.FIELDS.remainingUses.label'}} {{item.system.remainingUses}}</div>
+      {{/if}}
+      {{#if (eq item.type "weapon")}}
+        <div class="item-name"><b>{{item.name}}</b> / {{localize 'Boundless.Item.FIELDS.slots.label'}} {{item.system.slots}} / {{localize 'Boundless.Item.FIELDS.damage.label'}} {{item.system.damage}} / {{localize 'Boundless.Item.FIELDS.damageBonus.label'}} {{item.system.damageBonus}} / {{localize 'Boundless.Item.FIELDS.uses.label'}} {{item.system.uses}} / {{localize 'Boundless.Item.FIELDS.remainingUses.label'}} {{item.system.remainingUses}}</div>
+      {{/if}}
+      {{#if (eq item.type "basic")}}
+        <div class="item-name"><b>{{item.name}}</b> / {{localize 'Boundless.Item.FIELDS.slots.label'}} {{item.system.slots}} / {{localize 'Boundless.Item.FIELDS.uses.label'}} {{item.system.uses}} / {{localize 'Boundless.Item.FIELDS.remainingUses.label'}} {{item.system.remainingUses}}</div>
+      {{/if}}
+      {{#if (eq item.type "spell")}}
+        <div class="item-name"><b>{{item.name}}</b> / {{localize 'Boundless.Item.FIELDS.slots.label'}} {{item.system.slots}} / {{localize 'Boundless.Item.FIELDS.type.label'}}: {{item.system.type}}</div>
+      {{/if}}
+      {{#if (eq item.type "condition")}}
+        <div class="item-name"><b>{{item.name}}</b> / {{localize 'Boundless.Item.FIELDS.slots.label'}} {{item.system.slots}} / {{localize 'Boundless.Item.FIELDS.type.label'}}: {{item.system.type}}</div>
+      {{/if}}
+
       <div class="document-controls">
         <a class="item-control item-edit"
           title="{{localize 'DOCUMENT.Update' type=item.name}}"

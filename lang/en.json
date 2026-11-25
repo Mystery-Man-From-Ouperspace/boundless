@@ -79,10 +79,10 @@
           "label": "Armor"
         },
         "uses": {
-          "label": "Uses"
+          "label": "Max Uses"
         },
-        "used": {
-          "label": "Used"
+        "remainingUses": {
+          "label": "Remaining"
         },
         "type": {
           "label": "Type"

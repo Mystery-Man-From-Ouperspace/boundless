@@ -729,6 +729,9 @@ class BoundlessItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemSheet
         {
           id: "attributes",
         },
+        {
+          id: "notes",
+        },
       ],
       initial: "attributes",
       labelPrefix: "Boundless.Sheets.Tabs",
@@ -816,10 +819,11 @@ class BoundlessItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemSheet
   async _getNotes() {
     const doc = this.item;
     const source = doc._source;
-    const systemFields = CONFIG.Item.dataModels[doc.type]?.schema.fields;
+    // const systemFields = CONFIG.Item.dataModels[doc.type]?.schema.fields;
+    const systemFields = CONFIG.Item.dataModels.item.schema.fields;
 
     let fieldSets = [];
-    fieldSets = await this.#addSystemFields(systemFields["notes"], source, fieldSets, null);
+    fieldSets = await this._addField(systemFields["notes"], source, fieldSets, null);
 
     return fieldSets[0];
   }
@@ -830,9 +834,10 @@ class BoundlessItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemSheet
    * Handles the system fields for the form-fields generic.
    */
   async _getFields() {
+    /*
     const doc = this.item;
     const source = doc._source;
-    const systemFields = CONFIG.Item.dataModels[doc.type]?.schema.fields;
+    const systemFields = CONFIG.Item.dataModels.item.schema.fields;
     console.log("systemFields", systemFields);
     const fieldSets = [];
     // TODO: Find a clever way to handle enrichment
@@ -853,6 +858,65 @@ class BoundlessItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemSheet
       }
     }
     console.log("fieldSets", fieldSets);
+    return fieldSets;
+  */
+
+    const doc = this.item;
+    const source = doc._source;
+    const systemFields = CONFIG.Item.dataModels.item.schema.fields;
+
+    let fieldSets = [];
+    if (doc.type != "spell" && doc.type != "condition") {
+      fieldSets = await this._addField(systemFields["equipped"], source, fieldSets, null);
+    }
+    fieldSets = await this._addField(systemFields["slots"], source, fieldSets, null);
+    if (doc.type === "weapon") {
+      fieldSets = await this._addField(systemFields["damage"], source, fieldSets, null);
+      fieldSets = await this._addField(systemFields["damageBonus"], source, fieldSets, null);
+    }
+    if (doc.type === "armor") {
+      fieldSets = await this._addField(systemFields["armor"], source, fieldSets, null);
+    }
+    if (doc.type != "spell" && doc.type != "condition") {
+      fieldSets = await this._addField(systemFields["uses"], source, fieldSets, null);
+      fieldSets = await this._addField(systemFields["remainingUses"], source, fieldSets, null);
+    }
+    if (doc.type === "spell" || doc.type === "condition") {
+      fieldSets = await this._addField(systemFields["type"], source, fieldSets, null);
+    }
+    if (doc.type === "spell") {
+      fieldSets = await this._addField(systemFields["effects"], source, fieldSets, null);
+    }
+    return fieldSets;
+  }
+
+
+  /* -------------------------------------------------- */
+
+  /**
+   * Add system model fields to the fieldset.
+   */
+  async _addField(field, source, fieldSets, rollValuePath) {
+    const path = `system.${field.name}`;
+    if (field instanceof foundry.data.fields.SchemaField) {
+      console.log("field", field);
+      const legend = game.i18n.localize(field.label);
+
+      const fieldset = {
+        fieldset: true,
+        label: field.name,
+        legend: legend,
+        className: field.name.toLowerCase(),
+        canRoll: !!rollValuePath,
+        rollValuePath: rollValuePath ? `${path}.${rollValuePath}` : "",
+        fields: [],
+      };
+      await this.#addSystemFields(fieldset, field.fields, source, path);
+      fieldSets.push(fieldset);
+    } else {
+      fieldSets.push({ outer: { field, value: foundry.utils.getProperty(source, path) } });
+    }
+
     return fieldSets;
   }
 
@@ -1115,10 +1179,6 @@ const config_actor = {
   npc: NpcBoundless,
 };
 
-const config_item = {
-    // item: ItemBoundless, ///////////////?
-}
-
 /**
  * A simple extension that adds a hook at the end of data prep.
  */
@@ -1223,6 +1283,7 @@ class ItemBoundless extends ItemBaseBoundless {
   /* -------------------------------------------------- */
 
   /** @inheritdoc */
+
   static defineSchema() {
     const requiredInteger = { required: true, nullable: false, integer: true };
     const { BooleanField, NumberField, StringField } = foundry.data.fields;
@@ -1233,19 +1294,21 @@ class ItemBoundless extends ItemBaseBoundless {
       damageBonus: new NumberField({ ...requiredInteger, initial: 0 }),
       armor: new NumberField({ ...requiredInteger, initial: 0 }),
       uses: new NumberField({ ...requiredInteger, initial: 0 }),
-      used: new NumberField({ ...requiredInteger, initial: 0 }),
+      remainingUses: new NumberField({ ...requiredInteger, initial: 0 }),
       type: new StringField(),
-      effets: new StringField(),
+      effects: new StringField(),
     };
 
     return Object.assign(super.defineSchema(), schema);
-  }
 
+  }
+}
+
+const config_item = {
+    item: ItemBoundless,
 }
 
 //////////////////////////////////////////////////////////////////
-
-
 
 
 

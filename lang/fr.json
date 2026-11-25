@@ -64,10 +64,10 @@
     "Item": {
       "FIELDS": {
         "equipped": {
-          "label": "Équipé"
+          "label": "Équipé·e"
         },
         "slots": {
-          "label": "Emplacements"
+          "label": "Slots"
         },
         "damage": {
           "label": "Dégâts"
@@ -79,10 +79,10 @@
           "label": "Armure"
         },
         "uses": {
-          "label": "Utlisations"
+          "label": "Utilisations max"
         },
-        "used": {
-          "label": "Utilisés"
+        "remainingUses": {
+          "label": "Restant"
         },
         "type": {
           "label": "Type"

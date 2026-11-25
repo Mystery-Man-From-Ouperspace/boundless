@@ -17,9 +17,9 @@ export default class ItemBoundless extends ItemBaseBoundless {
       damageBonus: new NumberField({ ...requiredInteger, initial: 0 }),
       armor: new NumberField({ ...requiredInteger, initial: 0 }),
       uses: new NumberField({ ...requiredInteger, initial: 0 }),
-      used: new NumberField({ ...requiredInteger, initial: 0 }),
+      remainingUses: new NumberField({ ...requiredInteger, initial: 0 }),
       type: new StringField(),
-      effets: new StringField(),
+      effects: new StringField(),
     };
 
     return Object.assign(super.defineSchema(), schema);

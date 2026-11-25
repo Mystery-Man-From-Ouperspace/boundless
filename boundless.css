@@ -1,12 +1,60 @@
 .application.sheet.boundless {
   max-height: 90%;
 
-  &.actor,
+  &.actor {
+    gap: 0;
+    .window-content {
+      padding-top: 0;
+      background: #101010;
+    }
+  }
+
   &.item {
     gap: 0;
     .window-content {
       padding-top: 0;
       background: #101010;
+
+      .tab {
+        .form-group {
+          background-color: white;
+          display: flex;
+          flex-direction: column-reverse;
+          gap: 0.5rem;
+          justify-content: center;
+          align-items: center;
+          height: min-content;
+          padding: 3rem 0.5rem 0.5rem;
+
+          label {
+            flex: unset;
+            color: black;
+          }
+
+          .form-fields {
+            margin-bottom: 0;
+            flex: unset;
+
+            input[type=number],
+            input[type=text] {
+              background: white;
+              border: 2px solid black;
+              color: black;
+              font-size: 1.5rem;
+            }
+            input[type=number] {
+              text-align: center;
+            }
+            input[type=text] {
+              font-size: 0.85rem;
+            }
+            input[type=checkbox] {
+              margin-left: auto;
+              margin-right: auto;
+            }
+          }
+        }
+      }
     }
   }
 
@@ -361,10 +409,33 @@
 
 .theme-dark {
   .application.sheet.boundless {
-    &.actor,
+    &.actor {
+      .window-content {
+        background: #383838;
+      }
+    }
+
     &.item {
       .window-content {
         background: #383838;
+
+        .tab {
+          .form-group {
+            background-color: black;
+            label {
+              color: white;
+            }
+
+            .form-fields {
+              input[type=number],
+              input[type=text] {
+                background: black;
+                border: 2px solid white;
+                color: white;
+              }
+            }
+          }
+        }
       }
     }
 
