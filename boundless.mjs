@@ -13,7 +13,8 @@ Hooks.once("init", () => {
     CONFIG[docCls.documentName].documentClass = docCls;
   }
 
-  Object.assign(CONFIG.Actor.dataModels, dataModels.Actor.config);
+  Object.assign(CONFIG.Actor.dataModels, dataModels.Actor.config_actor);
+  Object.assign(CONFIG.Item.dataModels, dataModels.Item.config_item);
 
   CONFIG.Actor.defaultType = "player";
 

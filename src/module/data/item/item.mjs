@@ -9,8 +9,9 @@ export default class ItemBoundless extends ItemBaseBoundless {
   /** @inheritdoc */
   static defineSchema() {
     const requiredInteger = { required: true, nullable: false, integer: true }
-    const { NumberField, StringField, HTMLField } = foundry.data.fields;
+    const { BooleanField, NumberField, StringField } = foundry.data.fields;
     const schema = {
+      equipped: new BooleanField({ initial: false }),
       slots: new NumberField({ ...requiredInteger, initial: 0 }),
       damage: new NumberField({ ...requiredInteger, initial: 0 }),
       damageBonus: new NumberField({ ...requiredInteger, initial: 0 }),
@@ -19,7 +20,6 @@ export default class ItemBoundless extends ItemBaseBoundless {
       used: new NumberField({ ...requiredInteger, initial: 0 }),
       type: new StringField(),
       effets: new StringField(),
-      notes: new HTMLField({}),
     };
 
     return Object.assign(super.defineSchema(), schema);

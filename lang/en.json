@@ -63,6 +63,9 @@
     },
     "Item": {
       "FIELDS": {
+        "equipped": {
+          "label": "Equipped"
+        },
         "slots": {
           "label": "Slots"
         },
@@ -86,9 +89,6 @@
         },
         "effects": {
           "label": "Effects"
-        },
-        "notes": {
-          "label": "Notes"
         }
       }
     },

@@ -52,6 +52,10 @@ export class BoundlessItemSheet extends api.HandlebarsApplicationMixin(sheets.It
       template: systemPath("templates/shared/attributes.hbs"),
       scrollable: [""],
     },
+    notes: {
+      template: systemPath("templates/shared/notes.hbs"),
+      scrollable: [""],
+    },
   };
 
   /* -------------------------------------------------- */
@@ -95,8 +99,31 @@ export class BoundlessItemSheet extends api.HandlebarsApplicationMixin(sheets.It
         context.fields = await this._getFields();
         context.tab = context.tabs[partId];
         break;
+      case "notes":
+        context.notes = await this._getNotes();
+        context.enrichedDescription = await foundry.applications.ux.TextEditor.implementation.enrichHTML(context.notes.outer.value, { async: true });
+
+        context.tab = context.tabs[partId];
+        break;
     }
     return context;
+  }
+
+  /* -------------------------------------------------- */
+
+  /**
+   * Handles the system fields for the notes form-fields.
+   * @returns {object[]}
+   */
+  async _getNotes() {
+    const doc = this.item;
+    const source = doc._source;
+    const systemFields = CONFIG.Item.dataModels[doc.type]?.schema.fields;
+
+    let fieldSets = [];
+    fieldSets = await this.#addSystemFields(systemFields["notes"], source, fieldSets, null);
+
+    return fieldSets[0];
   }
 
   /* -------------------------------------------------- */

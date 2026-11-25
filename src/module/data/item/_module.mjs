@@ -1,7 +1,7 @@
 import ItemModel from "./item.mjs";
 
-const config = {
+const config_item = {
   item: ItemModel
 };
 
-export { ItemModel, config };
+export { ItemModel, config_item };

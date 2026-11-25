@@ -750,6 +750,10 @@ class BoundlessItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemSheet
       template: systemPath("templates/shared/attributes.hbs"),
       scrollable: [""],
     },
+    notes: {
+      template: systemPath("templates/shared/notes.hbs"),
+      scrollable: [""],
+    },
   };
 
   /* -------------------------------------------------- */
@@ -793,8 +797,31 @@ class BoundlessItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemSheet
         context.fields = await this._getFields();
         context.tab = context.tabs[partId];
         break;
+      case "notes":
+        context.notes = await this._getNotes();
+        context.enrichedDescription = await foundry.applications.ux.TextEditor.implementation.enrichHTML(context.notes.outer.value, { async: true });
+
+        context.tab = context.tabs[partId];
+        break;
     }
     return context;
+  }
+
+  /* -------------------------------------------------- */
+
+  /**
+   * Handles the system fields for the notes form-fields.
+   * @returns {object[]}
+   */
+  async _getNotes() {
+    const doc = this.item;
+    const source = doc._source;
+    const systemFields = CONFIG.Item.dataModels[doc.type]?.schema.fields;
+
+    let fieldSets = [];
+    fieldSets = await this.#addSystemFields(systemFields["notes"], source, fieldSets, null);
+
+    return fieldSets[0];
   }
 
   /* -------------------------------------------------- */
@@ -1006,7 +1033,7 @@ class ActorBaseBoundless extends foundry.abstract.TypeDataModel {
 
   /** @inheritdoc */
   static defineSchema() {
-    const requiredInteger = { required: true, nullable: false, integer: true }
+    const requiredInteger = { required: true, nullable: false, integer: true };
     const { SchemaField, NumberField, HTMLField } = foundry.data.fields;
     return {
       hitPoints: new SchemaField({
@@ -1077,7 +1104,7 @@ class PlayerBoundless extends ActorBaseBoundless {
 
   /** @inheritdoc */
   static defineSchema() {
-    const requiredInteger = { required: true, nullable: false, integer: true }
+    const requiredInteger = { required: true, nullable: false, integer: true };
     const { NumberField, SchemaField } = foundry.data.fields;
     const schema = {
       strength: new SchemaField({
@@ -1122,11 +1149,14 @@ class PlayerBoundless extends ActorBaseBoundless {
   }
 }
 
-const config = {
+const config_actor = {
   player: PlayerBoundless,
   npc: NpcBoundless,
-  // item: ItemBoundless, ///////////////
 };
+
+const config_item = {
+    // item: ItemBoundless, ///////////////?
+}
 
 /**
  * A simple extension that adds a hook at the end of data prep.
@@ -1203,6 +1233,18 @@ class ItemBaseBoundless extends foundry.abstract.TypeDataModel {
   /* -------------------------------------------------- */
 
   /** @inheritdoc */
+
+  static defineSchema() {
+    const requiredInteger = { required: true, nullable: false, integer: true };
+    const { HTMLField } = foundry.data.fields;
+    return {
+      notes: new HTMLField({}),
+    };
+  }
+
+  /* -------------------------------------------------- */
+
+  /** @inheritdoc */
   async _preCreate(data, options, user) {
     const allowed = await super._preCreate(data, options, user);
     if (allowed === false) return false;
@@ -1221,9 +1263,10 @@ class ItemBoundless extends ItemBaseBoundless {
 
   /** @inheritdoc */
   static defineSchema() {
-    const requiredInteger = { required: true, nullable: false, integer: true }
-    const { NumberField, StringField, HTMLField } = foundry.data.fields;
+    const requiredInteger = { required: true, nullable: false, integer: true };
+    const { BooleanField, NumberField, StringField } = foundry.data.fields;
     const schema = {
+      equipped: new BooleanField({ initial: false }),
       slots: new NumberField({ ...requiredInteger, initial: 0 }),
       damage: new NumberField({ ...requiredInteger, initial: 0 }),
       damageBonus: new NumberField({ ...requiredInteger, initial: 0 }),
@@ -1232,21 +1275,8 @@ class ItemBoundless extends ItemBaseBoundless {
       used: new NumberField({ ...requiredInteger, initial: 0 }),
       type: new StringField(),
       effets: new StringField(),
-      notes: new HTMLField({}),
     };
-    /*
-    const schema = {
-      slots: new NumberField(),
-      damage: new NumberField(),
-      damageBonus: new NumberField(),
-      armor: new NumberField(),
-      uses: new NumberField(),
-      used: new NumberField(),
-      type: new StringField(),
-      effets: new StringField(),
-      notes: new HTMLField({}),
-    };
-    */
+
     return Object.assign(super.defineSchema(), schema);
   }
 
@@ -1346,8 +1376,8 @@ Hooks.once("init", () => {
     CONFIG[docCls.documentName].documentClass = docCls;
   }
 
-  Object.assign(CONFIG.Actor.dataModels, config);
-  // Object.assign(CONFIG.Item.dataModels, config2);
+  Object.assign(CONFIG.Actor.dataModels, config_actor);
+  Object.assign(CONFIG.Item.dataModels, config_item);
 
   CONFIG.Actor.defaultType = "player";
 
