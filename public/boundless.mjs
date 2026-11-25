@@ -1042,15 +1042,6 @@ class ActorBaseBoundless extends foundry.abstract.TypeDataModel {
       }),
       notes: new HTMLField({}),
     };
-   /*
-    return {
-      hitPoints: new SchemaField({
-        current: new NumberField(),
-        max: new NumberField(),
-      }),
-      notes: new HTMLField({}),
-    };
-    */
 
   }
 
@@ -1081,16 +1072,6 @@ class NpcBoundless extends ActorBaseBoundless {
 
       }),
     };
-    /*
-    const schema = {
-      battle: new SchemaField({
-        armor: new NumberField(),
-        damage: new NumberField(),
-        damageBonus: new NumberField(),
-
-      }),
-    };
-    */
 
     return Object.assign(super.defineSchema(), schema);
   }
@@ -1124,26 +1105,6 @@ class PlayerBoundless extends ActorBaseBoundless {
         max: new NumberField({ ...requiredInteger, initial: 0 }),
       }),
     };
-    /*
-    const schema = {
-      strength: new SchemaField({
-        current: new NumberField(),
-        max: new NumberField(),
-      }),
-      presence: new SchemaField({
-        current: new NumberField(),
-        max: new NumberField(),
-      }),
-      agility: new SchemaField({
-        current: new NumberField(),
-        max: new NumberField(),
-      }),
-      willpower: new SchemaField({
-        current: new NumberField(),
-        max: new NumberField(),
-      }),
-    };
-    */
 
     return Object.assign(super.defineSchema(), schema);
   }
