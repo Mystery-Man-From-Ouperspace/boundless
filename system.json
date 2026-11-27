@@ -13,6 +13,11 @@
       "email": "creggh@tutamail.com",
       "mastodon": "@cregg@gamedev.lgbt",
       "discord": "creggplant"
+    },
+    {
+      "name": "with help from David Bercovici",
+      "url": "https://serveurdavid.fr",
+      "discord": "mystery_man_from_outerpace"
     }
   ],
   "esmodules": ["public/boundless.mjs"],
